@@ -18,6 +18,10 @@ div#wikipediaTooltip {
   overflow-x: hidden;
 }
 
-div#wikipediaTooltip > p {
+div#wikipediaTooltip > * {
   font-family: 'Merriweather';
+}
+
+div#wikipediaTooltip::-webkit-scrollbar {
+  display: none;
 }

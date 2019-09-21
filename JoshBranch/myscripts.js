@@ -24,7 +24,7 @@ function addTip() {
         xhr.onreadystatechange = fillTip;
 
         var r = sel.getRangeAt(0).getBoundingClientRect();
-        div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place ele below the selection
+        div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place div below the selection
         div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
 
         //code to set content
@@ -32,6 +32,7 @@ function addTip() {
         div.style.display = 'block';
     }
 };
+
 function removeTip() {
     div.style.display = 'none';
 };
@@ -44,7 +45,12 @@ function fillTip(response) {
         var r = JSON.parse(xhr.responseText);
         console.log(r);
         console.log(r.extract)
-        // time to partay!!!
+        if (r.type == "disambiguation") {
+            // do something else.
+        } else {
+            // blahblah
+        }
+
         div.textContent = r.extract;
     }
 }

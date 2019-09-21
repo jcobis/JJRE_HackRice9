@@ -1,5 +1,3 @@
-
-
 // Wikipedia tooltip div
 var div = document.createElement('div');
 document.body.appendChild( div );
@@ -12,8 +10,8 @@ div.style.top = "100px";
 div.style.left = "100px";
 
 
-
-function test() {
+// Show and hide tip
+function addTip() {
 	var sel = document.getSelection();
     if (!sel.isCollapsed) {
 
@@ -28,17 +26,21 @@ function test() {
         //code to set content
 
         div.style.display = 'block';
+
+        console.log(xhr);
     }
 };
-
 function removeTip() {
 	div.style.display = 'none';
 };
 
 
-document.onmouseup = test;
+document.onmouseup = addTip;
 document.onmousedown = removeTip;
 
+var xhr = new XMLHttpRequest();
+xhr.open('GET', "https://en.wikipedia.org/api/rest_v1/page/summary/apple", true);
+xhr.send();
 
 // IDEAS
 // Might want disambugation support, link following through the popup, wikipedia interface

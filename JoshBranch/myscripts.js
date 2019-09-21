@@ -4,7 +4,7 @@ document.body.appendChild( div );
 div.id = 'wikipediaTooltip';
 div.style.position = 'absolute';
 div.style.display = 'block';
-div.style.border = 'grey solid 1px';
+div.style.border = 'grey solid 2px';
 div.style.background = 'white';
 div.style.top = "100px";
 div.style.left = "100px";
@@ -13,15 +13,15 @@ var xhr = new XMLHttpRequest();
 
 // Show and hide tip
 function addTip() {
-	var sel = document.getSelection();
+    var sel = document.getSelection();
     if (!sel.isCollapsed) {
 
-    	// Blank at first while we wait for call to return, which prompts a seperate method
-		div.textContent = "";
+        // Blank at first while we wait for call to return, which prompts a seperate method
+        div.textContent = "";
 
-		xhr.open('GET', "https://en.wikipedia.org/api/rest_v1/page/summary/" + sel, true);
-		xhr.send();
-		xhr.onreadystatechange = fillTip;
+        xhr.open('GET', "https://en.wikipedia.org/api/rest_v1/page/summary/" + sel, true);
+        xhr.send();
+        xhr.onreadystatechange = fillTip;
 
         var r = sel.getRangeAt(0).getBoundingClientRect();
         div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place ele below the selection
@@ -33,17 +33,17 @@ function addTip() {
     }
 };
 function removeTip() {
-	div.style.display = 'none';
+    div.style.display = 'none';
 };
 
 // So many different tip functions!
 // Extract or extracthtml? Decide later. Would have to change functionality of links so maybe not.
 function fillTip(response) {
     if (xhr.readyState == 4 && xhr.status == 200) {
-    	console.log(response);
-    	var r = JSON.parse(xhr.responseText);
-    	console.log(r);
-    	console.log(r.extract)
+        console.log(response);
+        var r = JSON.parse(xhr.responseText);
+        console.log(r);
+        console.log(r.extract)
         // time to partay!!!
         div.textContent = r.extract;
     }

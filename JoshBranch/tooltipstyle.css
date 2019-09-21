@@ -1,12 +1,7 @@
-@font-face {
-  font-family: 'Merriweather';
-  src: url('https://fonts.googleapis.com/css?family=Merriweather&display=swap');
-}
-
 div#wikipediaTooltip {
   position: absolute;
   display: none;
-  padding: 10px;
+  padding: 15px;
   border: 1px solid black;
   border-radius: 15px;
   width: 30%;
@@ -16,10 +11,18 @@ div#wikipediaTooltip {
   left: 100px;
   overflow-y: scroll;
   overflow-x: hidden;
+  box-shadow: 2px 2px;
 }
 
 div#wikipediaTooltip > * {
-  font-family: 'Merriweather';
+  font-family: 'Noto Serif';
+  font-size: 12pt;
+  line-height: 1.5em;
+}
+
+div#wikipediaTooltip > h1, div#wikipediaTooltip > h2, div#wikipediaTooltip > h3, div#wikipediaTooltip > h4 {
+  font-weight: bold;
+  text-transform: none;
 }
 
 div#wikipediaTooltip::-webkit-scrollbar {

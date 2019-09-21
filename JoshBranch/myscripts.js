@@ -5,7 +5,7 @@
 var fontId = 'fonts';
 if (!document.getElementById(fontId)) {
   var fonts = document.createElement('link');
-  fonts.href = 'https://fonts.googleapis.com/css?family=Lobster|Merriweather&display=swap';
+  fonts.href = 'https://fonts.googleapis.com/css?family=Noto+Serif&display=swap';
   fonts.rel = 'stylesheet';
   fonts.type = 'text/css';
 
@@ -25,9 +25,9 @@ function setTipLocationToSelection() {
     div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
 }
 
-// Try to use the current selection to show a tip in the right location and populate it with text too 
+// Try to use the current selection to show a tip in the right location and populate it with text too
 function selectionTip() {
-    
+
     // Gets the current selection
     var sel = document.getSelection();
     if (!sel.isCollapsed) {
@@ -48,7 +48,7 @@ function tryToPopulateTip(title) {
     var apiEndpoint = "https://en.wikipedia.org/w/api.php";
     var params = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"
 
-    
+
     // Send the request and replace tip when the request returns
     fetch(apiEndpoint + "?" + params + "&origin=*")
         .then(function(response){return response.json();})
@@ -69,6 +69,7 @@ function tryToPopulateTip(title) {
 }
 
 // Makes the tip invisible anytime anyone clicks somewhere
+// TODO: reset/store scrolling positions
 function removeTip() {
     div.style.display = 'none';
 };

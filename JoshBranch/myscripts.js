@@ -1,30 +1,8 @@
 // Wikipedia tooltip div
 // TODO: move style things to a CSS file ?
 
-var fontId = "fontLink";
-if (!document.getElementById(fontId)) {
-  var fontLink = document.createElement('link');
-  fontLink.id = fontId;
-  fontLink.rel = 'stylesheet';
-  fontLink.type = 'text/css';
-  fontLink.href = 'https://fonts.googleapis.com/css?family=Merriweather&display=swap';
-
-  document.head.appendChild(fontLink);
-}
-
 var div = document.createElement('div');
 div.id = 'wikipediaTooltip';
-div.style.position = 'absolute';
-div.style.display = 'none';
-div.style.padding = '10px';
-div.style.border = '1px solid black';
-div.style.borderRadius = '15px';
-div.style.width = '30%';
-div.style.height = '30%';
-div.style.background = 'white';
-div.style.top = '100px';
-div.style.left = '100px';
-div.style.overflow = 'scroll';
 document.body.appendChild( div );
 
 // Show and hide tip
@@ -68,7 +46,7 @@ function addTip() {
     }
 };
 
-function removeTip() {
+function removeTip() {designers
     div.style.display = 'none';
 };
 

@@ -1,6 +1,6 @@
 {
 "update_url": "https://clients2.google.com/service/update2/crx",
-  
+
   "manifest_version": 2,
   "name": "WikiKids (just an idea lol)",
   "version": "1.0",
@@ -25,6 +25,10 @@
     {
       "matches": ["<all_urls>"],
       "js": ["myscripts.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "css": ["tooltipstyle.css"]
     }
   ],
   "background": {

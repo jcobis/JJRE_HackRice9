@@ -1,22 +1,42 @@
-function highlightHandler(e) {
-    // get the highlighted text
-    var text = document.getSelection();
-    // check if anything is actually highlighted
-    if(text.toString() !== '') {
-        // we've got a highlight, now do your stuff here
-        doStuff(text);
+
+
+// Wikipedia tooltip div
+var div = document.createElement('div');
+document.body.appendChild( div );
+div.id = 'wikipediaTooltip';
+div.style.position = 'absolute';
+div.style.display = 'block';
+div.style.border = 'grey solid 1px';
+div.style.background = 'white';
+div.style.top = "100px";
+div.style.left = "100px";
+
+
+
+function test() {
+	var ele = document.getElementById('wikipediaTooltip');
+	var sel = document.getSelection();
+    if (!sel.isCollapsed) {
+
+    	// Set element text to the string of the selection
+		ele.textContent = sel.toString();
+
+
+        var r = sel.getRangeAt(0).getBoundingClientRect();
+        ele.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place ele below the selection
+        ele.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
+
+        //code to set content
+
+        ele.style.display = 'block';
     }
-}
+};
+// window.addEventListener('mousedown', function () {
+//     ele.style.display = 'none';
+// });
 
-document.onmouseup = highlightHandler;
 
-// Display wikipedia stuff above the top left corner of the text
-function doStuff(text) {
-	oRange = text.getRangeAt(0); //get the text range
-	oRect = oRange.getBoundingClientRect();
-	console.log(oRect);
-	console.log(text.toString())
-}
+document.onmouseup = test;
 
 
 // IDEAS

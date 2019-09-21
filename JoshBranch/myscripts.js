@@ -20,44 +20,12 @@ div.style.padding = '10px';
 div.style.border = '1px solid black';
 div.style.borderRadius = '15px';
 div.style.width = '30%';
+div.style.height = '30%';
 div.style.background = 'white';
-<<<<<<< HEAD
 div.style.top = '100px';
 div.style.left = '100px';
-div.style.fontFamily = 'Merriweather';
-
+div.style.overflow = 'scroll';
 document.body.appendChild( div );
-=======
-div.style.top = "100px";
-div.style.left = "100px";
-document.body.appendChild( div );
-
-
-
-
-// var test = new XMLHttpRequest();
-// test.open('GET', 'https://en.wikipedia.org/w/api.php?format=xml&action=query&prop=extracts&titles=Stack%20Overflow&redirects=true');
-// test.send();
-// test.onreadystatechange = testtest;
-
-// function testtest(r) {
-//     if (test.readyState == 4 && test.status == 200) {
-//         console.log("TESTING!");
-//         console.log(test.responseText);
-//         console.log(test);
-//     }
-// }
-
-// const Http = new XMLHttpRequest();
-// const url='https://jsonplaceholder.typicode.com/posts';
-// Http.open("GET", url);
-// Http.send();
-
-// Http.onreadystatechange = (e) => {
-//   console.log(Http.responseText)
-// };
->>>>>>> c6f1c140a69deb91e41be55fbd3e77836308a67f
-
 
 // Show and hide tip
 var xhr = new XMLHttpRequest();

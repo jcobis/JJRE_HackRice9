@@ -42,24 +42,53 @@ function selectionTip() {
 };
 
 
+function storeWord(word) {
+  chrome.storage.sync.get([word], function(result) {
+    if (result[word] === undefined) {
+      //word not found in storage, so store it.
+      var storeWord = {};
+      storeURL[word] = 1;
+      chrome.storage.sync.set(storeWord, function() {
+        console.log("Stored: "+ word);
+      });
+    } else {
+      console.log(Object.values(result)); // [0].val
+    }
+  });
+
+  // var testPrefs = {'val': 1};
+  // chrome.storage.sync.set({[word]: testPrefs}, function() {
+  //   console.log('Saved', word, testPrefs);
+  // });
+}
+
+function getWord(key) {
+  chrome.storage.sync.get(key, function(data) { console.log(Object.values(data)[0].val); })
+}
+
 // Makes a request to wikipedia and populates the tip if the request returns succesfully
 function tryToPopulateTip(title) {
 
     var apiEndpoint = "https://en.wikipedia.org/w/api.php";
     var params = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"
 
-
     // Send the request and replace tip when the request returns
     fetch(apiEndpoint + "?" + params + "&origin=*")
         .then(function(response){return response.json();})
         .then(function(response) {
+              console.log(response)
               var pages = response.query.pages;
               if (pages) {
                 for (var page in pages) {
-                  var content =  pages[page].extract;
+                  var content = pages[page].extract;
                   if (content) {
-                      div.innerHTML = content; // This will only run once
-                      div.style.display = 'block';
+                    // Showing new wikipedia page:
+                    div.innerHTML = content; // This will only run once
+                    div.style.display = 'block';
+                    storeWord(pages[page].title)
+                    // chrome.storage.sync.get("key", function (obj) {
+                    //   console.log(obj);
+                    // });
                   }
                   break;
               }
@@ -67,8 +96,31 @@ function tryToPopulateTip(title) {
         });
 
     return false;
-
 }
+
+
+// const setStorageData = data =>
+//   new Promise((resolve, reject) =>
+//     chrome.storage.sync.set(data, () =>
+//       chrome.runtime.lastError
+//         ? reject(Error(chrome.runtime.lastError.message))
+//         : resolve()
+//     )
+//   )
+
+// await setStorageData({ data: [someData] })
+
+// const getStorageData = key =>
+//   new Promise((resolve, reject) =>
+//     chrome.storage.sync.get(key, result =>
+//       chrome.runtime.lastError
+//         ? reject(Error(chrome.runtime.lastError.message))
+//         : resolve(result)
+//     )
+//   )
+
+// const { data } = await getStorageData('data')
+
 
 
 // Show tip when text selected

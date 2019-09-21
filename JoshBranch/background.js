@@ -1,16 +1,17 @@
-'use strict';
+// 'use strict';
+// chrome.tabs.onUpdated.addListener(function(id, changeInfo, tab){
+//   console.log("Updated tab: " + tab.url);
+// });
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({color: '#3aa757'}, function() {
-    console.log("The color is green.");
-  });
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {hostEquals: 'developer.chrome.com'},
-      })
-      ],
-          actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
-  });
-});
+// chrome.storage.sync.get(url, function(result){
+//   if(result[url]===undefined){
+//     //word not found in storage, so store it.
+//     var storeURL = {};
+//     storeURL[url] = 1;
+//     chrome.storage.sync.set(storeURL, function(){
+//       console.log("Stored: "+url);
+//     });
+//   }else{
+//     //word has been found in storage, so do nothing.
+//   }
+// });

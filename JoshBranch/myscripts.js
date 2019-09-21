@@ -70,13 +70,6 @@ function tryToPopulateTip(title) {
 
 }
 
-// Makes the tip invisible anytime anyone clicks somewhere
-// TODO: reset/store scrolling positions
-function removeTip() {
-    div.style.display = 'none';
-};
-
-
 
 document.onmouseup = selectionTip;
 //document.onmousedown = removeTip;

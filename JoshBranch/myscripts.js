@@ -36,35 +36,33 @@ function addTip() {
         // Blank at first while we wait for call to return, which prompts a seperate method
         div.textContent = "";
 
-        // xhr.open('GET', "https://en.wikipedia.org/api/rest_v1/page/summary/" + sel, true);
-        // xhr.send();
-        // xhr.onreadystatechange = fillTip;
 
         var r = sel.getRangeAt(0).getBoundingClientRect();
         div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place div below the selection
         div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
 
         //code to set content
-
         var apiEndpoint = "https://en.wikipedia.org/w/api.php";
-        //var params = "action=query&list=allimages&ailimit=3&format=json";
         var params = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(sel.toString().trim()) + "&redirects=true"
 
         /**
-         * Send the request
+         * Send the request and handle it
          */
         fetch(apiEndpoint + "?" + params + "&origin=*")
             .then(function(response){return response.json();})
             .then(function(response) {
                   var pages = response.query.pages;
                   for (var page in pages) {
-                    console.log(pages[page].extract);
-                    div.innerHTML = pages[page].extract; // This will only run once
+                    var content =  pages[page].extract;
+                    console.log(content);
+                    console.log(!content);
+                    if (content) {   
+                        div.innerHTML = content; // This will only run once
+                        div.style.display = 'block';
+                    }
                     break;
                   }
              });
-
-        div.style.display = 'block';
     }
 };
 
@@ -74,21 +72,22 @@ function removeTip() {
 
 // So many different tip functions!
 // Extract or extracthtml? Decide later. Would have to change functionality of links so maybe not.
-function fillTip(response) {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        console.log(response);
-        var r = JSON.parse(xhr.responseText);
-        console.log(r);
-        console.log(r.extract)
-        if (r.type == "disambiguation") {
-            // do something else.
-        } else {
-            // blahblah
-        }
+// function fillTip(response) {
+//     if (xhr.readyState == 4 && xhr.status == 200) {
+//         console.log(response);
+//         var r = JSON.parse(xhr.responseText);
+//         console.log(r);
+//         console.log(r.extract)
+//         if (r.type == "disambiguation") {
+//             // do something else.
+//         } else {
+//             // blahblah
+//         }
 
-        div.textContent = r.extract;
-    }
-}
+//         div.textContent = r.extract;
+//         div.style.display = 'block';
+//     }
+// }
 
 // Need to have two competing functions, tip and reponse
 

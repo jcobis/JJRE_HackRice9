@@ -1,6 +1,17 @@
 // Wikipedia tooltip div
 // TODO: move style things to a CSS file ?
 
+// adding fonts. for some reason this doesn't work in the CSS so it's going here:
+var fontId = 'fonts';
+if (!document.getElementById(fontId)) {
+  var fonts = document.createElement('link');
+  fonts.href = 'https://fonts.googleapis.com/css?family=Lobster|Merriweather&display=swap';
+  fonts.rel = 'stylesheet';
+  fonts.type = 'text/css';
+
+  document.head.appendChild(fonts);
+}
+
 var div = document.createElement('div');
 div.id = 'wikipediaTooltip';
 document.body.appendChild( div );

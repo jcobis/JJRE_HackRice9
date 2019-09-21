@@ -32,7 +32,7 @@ function addTip() {
                   if (pages) {
                     for (var page in pages) {
                       var content =  pages[page].extract;
-                      if (content) {   
+                      if (content) {
                           div.innerHTML = content; // This will only run once
                           div.style.display = 'block';
                       }
@@ -43,7 +43,7 @@ function addTip() {
     }
 };
 
-function removeTip() {designers
+function removeTip() {
     div.style.display = 'none';
 };
 

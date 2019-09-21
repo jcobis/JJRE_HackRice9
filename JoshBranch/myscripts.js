@@ -5,53 +5,56 @@ var div = document.createElement('div');
 div.id = 'wikipediaTooltip';
 document.body.appendChild( div );
 
-// Show and hide tip
-function addTip() {
+// Try to use the current selection to show a tip in the right location and populate it with text too 
+function selectionTip() {
     var sel = document.getSelection();
     if (!sel.isCollapsed) {
-
-        // Blank at first while we wait for call to return, which prompts a seperate method
-        div.textContent = "";
-
-
+        
+        // Try to populate the tip
+        tryToPopulateTip(sel.toString());
+        
+        // Set the location of the tip
         var r = sel.getRangeAt(0).getBoundingClientRect();
         div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place div below the selection
         div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
-
-        //code to set content
-        var apiEndpoint = "https://en.wikipedia.org/w/api.php";
-        var params = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(sel.toString().trim()) + "&redirects=true"
-
-        /**
-         * Send the request and handle it
-         */
-        fetch(apiEndpoint + "?" + params + "&origin=*")
-            .then(function(response){return response.json();})
-            .then(function(response) {
-                  var pages = response.query.pages;
-                  if (pages) {
-                    for (var page in pages) {
-                      var content =  pages[page].extract;
-                      if (content) {
-                          div.innerHTML = content; // This will only run once
-                          div.style.display = 'block';
-                      }
-                      break;
-                  }
-                }
-             });
     }
 };
 
+
+// Makes a request to wikipedia and populates the tip if the request returns succesfully
+function tryToPopulateTip(title) {
+    var apiEndpoint = "https://en.wikipedia.org/w/api.php";
+    var params = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"
+
+    /**
+     * Send the request and replace tip when the request returns
+    */
+    fetch(apiEndpoint + "?" + params + "&origin=*")
+        .then(function(response){return response.json();})
+        .then(function(response) {
+              var pages = response.query.pages;
+              if (pages) {
+                for (var page in pages) {
+                  var content =  pages[page].extract;
+                  if (content) {
+                      div.innerHTML = content; // This will only run once
+                      div.style.display = 'block';
+                  }
+                  break;
+              }
+            }
+        });
+
+}
+
+// Makes the tip invisible anytime anyone clicks somewhere
 function removeTip() {
     div.style.display = 'none';
 };
 
 
-// Need to have two competing functions, tip and reponse
 
-
-document.onmouseup = addTip;
+document.onmouseup = selectionTip;
 document.onmousedown = removeTip;
 
 

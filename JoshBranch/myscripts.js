@@ -28,6 +28,7 @@ function addTip() {
         fetch(apiEndpoint + "?" + params + "&origin=*")
             .then(function(response){return response.json();})
             .then(function(response) {
+                  console.log(response)
                   var pages = response.query.pages;
                   if (pages) {
                     for (var page in pages) {

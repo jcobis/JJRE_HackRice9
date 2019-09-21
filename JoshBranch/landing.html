@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen|Roboto" type='text/css'>
-<link rel="stylesheet" href="stylepage.css">
+<link rel="stylesheet" href="landingstyle.css">
 <style>
   html,h1,h2,h3,h4 {font-family: "Oxygen", sans-serif}
   body,p {font-family: 'Roboto', sans-serif;}
@@ -24,6 +24,9 @@
   .w3-tag {height: 15px; width: 15px; padding: 0; margin-top: 6px}
 </style>
 <body>
+
+<!-- Slides -->
+<!-- <script src="landing.js"></script> -->
 
 <!-- Links -->
 <div class="w3-top">
@@ -139,37 +142,6 @@
 <footer class="w3-container w3-padding-32 w3-light-grey w3-center">
   <a href="#" class="w3-button w3-black w3-margin">Top</a>
 </footer>
-
-<!-- Slides -->
-<script>
-// Slideshow
-var slideIndex = 1;
-showDivs(slideIndex);
-
-function plusDivs(n) {
-  showDivs(slideIndex += n);
-}
-
-function currentDiv(n) {
-  showDivs(slideIndex = n);
-}
-
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("demodots");
-  if (n > x.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = x.length} ;
-  for (i = 0; i < x.length; i++) {
-     x[i].style.display = "none";  
-  }
-  for (i = 0; i < dots.length; i++) {
-     dots[i].className = dots[i].className.replace(" w3-white", "");
-  }
-  x[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " w3-white";
-}
-</script>
 
 </body>
 </html>

@@ -2,17 +2,17 @@
 "update_url": "https://clients2.google.com/service/update2/crx",
 
   "manifest_version": 2,
-  "name": "WikiKids (just an idea lol)",
+  "name": "Wiki-Kids",
   "version": "1.0",
   "description": "Wikipedia Child Learning Game",
   "permissions": ["activeTab", "declarativeContent", "storage", "bookmarks"],
   "options_page": "options.html",
-  // "background": {
-  //   "scripts": ["background.js"],
-  //   "persistent": false
-  // },
-  "page_action": {
-    "default_title": "Test Popup",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_title": "Popup",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "images/get_started16.png",

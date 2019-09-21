@@ -1,7 +1,7 @@
 div#wikipediaTooltip {
   position: absolute;
   display: none;
-  padding: 25px;
+  padding: 0 2%;
   border: 1px solid black;
   border-radius: 15px;
   width: 30%;
@@ -15,24 +15,39 @@ div#wikipediaTooltip {
   -webkit-box-shadow: 2px 2px;
 }
 
-div#wikipediaTooltip > * {
-  all: initial;
+div#wikipediaTooltip > p, div#wikipediaTooltip > ul {
+  all: initial; /* to get rid of css that's already on the page */
 
   display: block;
+  text-align: justify;
   font-family: 'Noto Serif';
   font-size: 10pt;
   line-height: 1.5em;
   list-style-type: square;
-}
-
-div#wikipediaTooltip > h2, div#wikipediaTooltip > h3, div#wikipediaTooltip > h4 {
-  font-weight: bold;
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
+div#wikipediaTooltip > h3, div#wikipediaTooltip > h4 {
+  all: initial;
+
+  display: block;
+  font-family: 'Noto Serif';
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.5em;
+  padding: 2% 0;
+}
+
 div#wikipediaTooltip > h2 {
-  text-transform: capitalize;
+  all: initial;
+
+  display: block;
+  font-family: 'Noto Serif';
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1.5em;
+  padding: 2% 0;
 }
 
 div#wikipediaTooltip::-webkit-scrollbar {

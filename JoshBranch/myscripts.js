@@ -5,7 +5,7 @@
 var fontId = 'fonts';
 if (!document.getElementById(fontId)) {
   var fonts = document.createElement('link');
-  fonts.href = 'https://fonts.googleapis.com/css?family=Noto+Serif&display=swap';
+  fonts.href = 'https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif&display=swap';
   fonts.rel = 'stylesheet';
   fonts.type = 'text/css';
 
@@ -78,9 +78,9 @@ function tryToPopulateTip(title) {
 // If the window is visisible and you click outside the screen, it hides the window
 // Partial source https://stackoverflow.com/questions/152975/how-do-i-detect-a-click-outside-an-element
 function showAndHideListeners(element) {
-    
+
     const outsideClickListener = event => {
-        
+
         // If click is outside box and box is onscreen,
         if (!element.contains(event.target) && isVisible(element)) { // or use: event.target.closest(selector) === null
           element.style.display = 'none';
@@ -91,7 +91,7 @@ function showAndHideListeners(element) {
     // Only update tip if selection exists and is outside the tooltip if there is any on display right now
     const selectionShower = event => {
         if (!isVisible(element) || !element.contains(event.target)) {
-            
+
             // Gets the current selection
             var sel = document.getSelection();
             if (!sel.isCollapsed) {

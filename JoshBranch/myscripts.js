@@ -71,9 +71,11 @@ function tryToPopulateTip(title) {
 }
 
 
+// Show tip when text selected
 document.onmouseup = selectionTip;
-//document.onmousedown = removeTip;
 
+// Hide when click outside window
+// Source https://stackoverflow.com/questions/152975/how-do-i-detect-a-click-outside-an-element
 function hideOnClickOutside(element) {
     const outsideClickListener = event => {
         if (!element.contains(event.target) && isVisible(element)) { // or use: event.target.closest(selector) === null
@@ -84,9 +86,7 @@ function hideOnClickOutside(element) {
 
     document.addEventListener('click', outsideClickListener);
 };
-
 const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length ); // source (2018-03-11): https://github.com/jquery/jquery/blob/master/src/css/hiddenVisibleSelectors.js
-
 hideOnClickOutside(div);
 
 // IDEAS

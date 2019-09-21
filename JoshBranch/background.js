@@ -17,3 +17,10 @@ chrome.runtime.onInstalled.addListener(function() {
     }]);
   });
 });
+
+
+// This will run when a bookmark is created.
+chrome.bookmarks.onCreated.addListener(function() {
+  chrome.tabs.executeScript(null, {
+  code: "alert(window.getSelection().toString());"})
+});

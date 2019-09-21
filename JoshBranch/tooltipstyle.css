@@ -12,11 +12,12 @@ div#wikipediaTooltip {
   overflow-y: scroll;
   overflow-x: hidden;
   box-shadow: 2px 2px;
+  -webkit-box-shadow: 2px 2px;
 }
 
 div#wikipediaTooltip > * {
   font-family: 'Noto Serif';
-  font-size: 12pt;
+  font-size: 10pt;
   line-height: 1.5em;
 }
 

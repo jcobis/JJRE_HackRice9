@@ -21,15 +21,46 @@ div.style.border = '1px solid black';
 div.style.borderRadius = '15px';
 div.style.width = '30%';
 div.style.background = 'white';
+<<<<<<< HEAD
 div.style.top = '100px';
 div.style.left = '100px';
 div.style.fontFamily = 'Merriweather';
 
 document.body.appendChild( div );
+=======
+div.style.top = "100px";
+div.style.left = "100px";
+document.body.appendChild( div );
 
-var xhr = new XMLHttpRequest();
+
+
+
+// var test = new XMLHttpRequest();
+// test.open('GET', 'https://en.wikipedia.org/w/api.php?format=xml&action=query&prop=extracts&titles=Stack%20Overflow&redirects=true');
+// test.send();
+// test.onreadystatechange = testtest;
+
+// function testtest(r) {
+//     if (test.readyState == 4 && test.status == 200) {
+//         console.log("TESTING!");
+//         console.log(test.responseText);
+//         console.log(test);
+//     }
+// }
+
+// const Http = new XMLHttpRequest();
+// const url='https://jsonplaceholder.typicode.com/posts';
+// Http.open("GET", url);
+// Http.send();
+
+// Http.onreadystatechange = (e) => {
+//   console.log(Http.responseText)
+// };
+>>>>>>> c6f1c140a69deb91e41be55fbd3e77836308a67f
+
 
 // Show and hide tip
+var xhr = new XMLHttpRequest();
 function addTip() {
     var sel = document.getSelection();
     if (!sel.isCollapsed) {
@@ -37,15 +68,33 @@ function addTip() {
         // Blank at first while we wait for call to return, which prompts a seperate method
         div.textContent = "";
 
-        xhr.open('GET', "https://en.wikipedia.org/api/rest_v1/page/summary/" + sel, true);
-        xhr.send();
-        xhr.onreadystatechange = fillTip;
+        // xhr.open('GET', "https://en.wikipedia.org/api/rest_v1/page/summary/" + sel, true);
+        // xhr.send();
+        // xhr.onreadystatechange = fillTip;
 
         var r = sel.getRangeAt(0).getBoundingClientRect();
         div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place div below the selection
         div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
 
         //code to set content
+
+        var apiEndpoint = "https://en.wikipedia.org/w/api.php";
+        //var params = "action=query&list=allimages&ailimit=3&format=json";
+        var params = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(sel.toString().trim()) + "&redirects=true"
+
+        /**
+         * Send the request
+         */
+        fetch(apiEndpoint + "?" + params + "&origin=*")
+            .then(function(response){return response.json();})
+            .then(function(response) {
+                  var pages = response.query.pages;
+                  for (var page in pages) {
+                    console.log(pages[page].extract);
+                    div.innerHTML = pages[page].extract; // This will only run once
+                    break;
+                  }
+             });
 
         div.style.display = 'block';
     }

@@ -14,29 +14,30 @@ div.style.left = "100px";
 
 
 function test() {
-	var ele = document.getElementById('wikipediaTooltip');
 	var sel = document.getSelection();
     if (!sel.isCollapsed) {
 
     	// Set element text to the string of the selection
-		ele.textContent = sel.toString();
+		div.textContent = sel.toString();
 
 
         var r = sel.getRangeAt(0).getBoundingClientRect();
-        ele.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place ele below the selection
-        ele.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
+        div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place ele below the selection
+        div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
 
         //code to set content
 
-        ele.style.display = 'block';
+        div.style.display = 'block';
     }
 };
-// window.addEventListener('mousedown', function () {
-//     ele.style.display = 'none';
-// });
+
+function removeTip() {
+	div.style.display = 'none';
+};
 
 
 document.onmouseup = test;
+document.onmousedown = removeTip;
 
 
 // IDEAS

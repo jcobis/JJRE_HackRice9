@@ -16,30 +16,40 @@ var div = document.createElement('div');
 div.id = 'wikipediaTooltip';
 document.body.appendChild( div );
 
+
+// Function name pretty self explanatory, no?
+function setTipLocationToSelection() {
+    var sel = document.getSelection();
+    var r = sel.getRangeAt(0).getBoundingClientRect();
+    div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place div below the selection
+    div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
+}
+
 // Try to use the current selection to show a tip in the right location and populate it with text too 
 function selectionTip() {
+    
+    // Gets the current selection
     var sel = document.getSelection();
     if (!sel.isCollapsed) {
-        
+
+        // Set the tip location
+        setTipLocationToSelection();
+
         // Try to populate the tip
         tryToPopulateTip(sel.toString());
-        
-        // Set the location of the tip
-        var r = sel.getRangeAt(0).getBoundingClientRect();
-        div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place div below the selection
-        div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
+
     }
 };
 
 
 // Makes a request to wikipedia and populates the tip if the request returns succesfully
 function tryToPopulateTip(title) {
+
     var apiEndpoint = "https://en.wikipedia.org/w/api.php";
     var params = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"
 
-    /**
-     * Send the request and replace tip when the request returns
-    */
+    
+    // Send the request and replace tip when the request returns
     fetch(apiEndpoint + "?" + params + "&origin=*")
         .then(function(response){return response.json();})
         .then(function(response) {

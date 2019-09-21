@@ -66,6 +66,8 @@ function tryToPopulateTip(title) {
             }
         });
 
+    return false;
+
 }
 
 // Makes the tip invisible anytime anyone clicks somewhere
@@ -76,9 +78,22 @@ function removeTip() {
 
 
 document.onmouseup = selectionTip;
-document.onmousedown = removeTip;
+//document.onmousedown = removeTip;
+
+function hideOnClickOutside(element) {
+    const outsideClickListener = event => {
+        if (!element.contains(event.target) && isVisible(element)) { // or use: event.target.closest(selector) === null
+          element.style.display = 'none';
+        };
+    };
 
 
+    document.addEventListener('click', outsideClickListener);
+};
+
+const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length ); // source (2018-03-11): https://github.com/jquery/jquery/blob/master/src/css/hiddenVisibleSelectors.js
+
+hideOnClickOutside(div);
 
 // IDEAS
 // Might want disambugation support, link following through the popup, wikipedia interface

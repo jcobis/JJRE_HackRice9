@@ -2,7 +2,7 @@ function highlightHandler(e) {
     // get the highlighted text
     var text = document.getSelection();
     // check if anything is actually highlighted
-    if(text !== '') {
+    if(text.toString() !== '') {
         // we've got a highlight, now do your stuff here
         doStuff(text);
     }
@@ -11,5 +11,8 @@ function highlightHandler(e) {
 document.onmouseup = highlightHandler;
 
 function doStuff(text) {
-     alert(text)
+	oRange = text.getRangeAt(0); //get the text range
+	oRect = oRange.getBoundingClientRect();
+	console.log(oRect);
+	console.log(text.toString())
 }

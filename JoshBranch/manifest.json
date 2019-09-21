@@ -4,10 +4,10 @@
   "description": "Build an Extension!",
   "permissions": ["activeTab", "declarativeContent", "storage", "bookmarks"],
   "options_page": "options.html",
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
+  // "background": {
+  //   "scripts": ["background.js"],
+  //   "persistent": false
+  // },
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {

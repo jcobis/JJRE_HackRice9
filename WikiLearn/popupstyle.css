@@ -36,7 +36,7 @@ button#checkPage {
 button#checkPage:hover {
   background-color: #4CAF50; /* Green */
   color: white;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 button#checkPage.active {

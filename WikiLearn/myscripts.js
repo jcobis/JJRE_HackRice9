@@ -109,7 +109,8 @@ function tryToPopulateTip(title) {
                 //console.log(charSpot);
             }
 
-            div.innerHTML = plainResponse; // This will only run once
+            // This will only run once
+            div.innerHTML = "<h1>" + title + "</h1>" + plainResponse;
             div.style.display = 'block';
             div.scrollTop = 0;
 
@@ -155,7 +156,7 @@ function tryToPopulateTip(title) {
 
     // HTML request handling
     function getHTML(t) {
-        
+
         // console.log("getting html: " + t)
         var htmlAPIEndpoint = "https://en.wikipedia.org/w/api.php";
         var htmlParams = "format=json&action=visualeditor&paction=parse&page=" + encodeURIComponent(t.trim()) + "&redirects=true"

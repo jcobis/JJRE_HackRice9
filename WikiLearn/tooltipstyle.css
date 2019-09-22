@@ -91,6 +91,16 @@ div#wikipediaTooltip > h2 {
   padding: 2% 0;
 }
 
+div#wikipediaTooltip > h1 {
+  all: initial;
+
+  display: block;
+  font-family: 'Noto Serif';
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.5em;
+}
+
 div#wikipediaTooltip::-webkit-scrollbar {
   display: none;
 }

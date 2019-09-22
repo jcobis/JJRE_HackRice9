@@ -108,7 +108,6 @@ function tryToPopulateTip(title) {
                     htmlResponse = content;
                     actOnResponse(content);
                 }
-<<<<<<< HEAD
 
                 console.log(pages[page].title);
                 storeWord(pages[page].title);
@@ -116,8 +115,6 @@ function tryToPopulateTip(title) {
                 chrome.storage.sync.get(pages[page].title, function(obj) {
                   console.log("Finished storing: " + obj);
                 });
-=======
->>>>>>> f2bc8769b4cdcef7052a0b2f995313c972acb5a3
               }
             });
 

@@ -41,6 +41,8 @@ function selectionTip() {
 };
 
 
+var lastWikiTitle = "";
+
 // Makes a request to wikipedia and populates the tip if the request returns succesfully
 function tryToPopulateTip(title) {
 
@@ -64,7 +66,7 @@ function tryToPopulateTip(title) {
 
         if (processesToWaitOn == 0) {
             plainResponse = plainResponse.replace("<b>","").replace("</b>","").replace("<i>","").replace("</i>","");
-            console.log(plainResponse);
+            // console.log(plainResponse);
 
             // Replace words with in environment links
             // First get the first link in the plaintext
@@ -81,7 +83,7 @@ function tryToPopulateTip(title) {
 
             while (wordIndex < linkArray.length) {
                 if (plainResponse.includes(linkArray[wordIndex])) {
-                    console.log("First: " + linkArray[wordIndex] );
+                    // console.log("First: " + linkArray[wordIndex] );
                     break;
                 }
                 wordIndex += 2;
@@ -158,13 +160,15 @@ function tryToPopulateTip(title) {
               for (var page in pages) {
                 var content = pages[page].extract;
                 if (content) {
-                  // Showing new wikipedia page:
-                  plainResponse = content;
-                  actOnResponse(content);
-                  getHTML(pages[page].title);
+                    // Showing new wikipedia page:
+                    plainResponse = content;
+                    actOnResponse(content);
+                    getHTML(pages[page].title);
 
-                  //console.log(pages[page].title);
-                  storeWord(pages[page].title);
+                    lastWikiTitle = pages[page].title;
+
+                    //console.log(pages[page].title);
+                    storeWord(pages[page].title);
                 }
                 break;
               }
@@ -316,8 +320,12 @@ showAndHideListeners(div);
 
 // Event listener for pressing 'w' and passing a message to open a new tab
 window.addEventListener("keypress", function(event) {
-    console.log(event.keyCode);
     if (event.keyCode == 119 && isVisible(div)) {
-        alert('message passing time.');
+        chrome.runtime.sendMessage({url: "https://en.wikipedia.org/wiki/" + encodeURIComponent(lastWikiTitle.trim())});
     }
 })
+
+
+// chrome.runtime.sendMessage({url: "hello"}, function(response) {
+//   console.log(response.farewell);
+// });

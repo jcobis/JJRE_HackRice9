@@ -21,7 +21,7 @@ function setTipLocationToSelection() {
     var sel = document.getSelection();
     var r = sel.getRangeAt(0).getBoundingClientRect();
     div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place div below the selection
-    div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
+    div.style.left = (r.left + window.pageXOffset) + 'px'; //this will align the right edges together
 }
 
 
@@ -68,7 +68,7 @@ function tryToPopulateTip(title) {
             firstInText = 0;
             linkArray = hrefExtracter(htmlResponse);
             while (firstInText < linkArray.length) {
-                
+
                 firstInText += 2
             }
 
@@ -89,7 +89,7 @@ function tryToPopulateTip(title) {
               if (pages) {
                 for (var page in pages) {
                   var content = pages[page].extract;
-                  if (content) {
+                  if (content) {{}
 
                     plainResponse = content;
                     actOnResponse(content);

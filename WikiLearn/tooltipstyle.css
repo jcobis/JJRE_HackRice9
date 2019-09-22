@@ -15,6 +15,8 @@ div#wikipediaTooltip {
   -webkit-box-shadow: 2px 2px;
 }
 
+/* there is a lot of redundant style here but I think it's necessary because of the all: initial */
+
 div#wikipediaTooltip > p, div#wikipediaTooltip > ul {
   all: initial; /* to get rid of css that's already on the page */
 
@@ -24,6 +26,19 @@ div#wikipediaTooltip > p, div#wikipediaTooltip > ul {
   font-size: 10pt;
   line-height: 1.5em;
   list-style-type: square;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+div#wikipediaTooltip > ol {
+  all: initial;
+
+  display: block;
+  text-align: justify;
+  font-family: 'Noto Serif';
+  font-size: 10pt;
+  line-height: 1.5em;
+  list-style-type: decimal;
   padding-top: 5px;
   padding-bottom: 5px;
 }

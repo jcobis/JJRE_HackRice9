@@ -5,7 +5,7 @@
   "name": "Wiki-Kids",
   "version": "1.0",
   "description": "Wikipedia Child Learning Game",
-  "permissions": ["activeTab", "declarativeContent", "storage", "bookmarks"],
+  "permissions": ["activeTab", "tabs", "declarativeContent", "storage", "bookmarks"],
   "options_page": "options.html",
   "background": {
     "scripts": ["background.js"],

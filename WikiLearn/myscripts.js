@@ -60,7 +60,16 @@ function tryToPopulateTip(title) {
 
         processesToWaitOn--;
         if (processesToWaitOn == 0) {
+<<<<<<< HEAD
             div.innerHTML = htmlResponse; // This will only run once
+=======
+
+            var toDisplay = plainResponse;
+
+            // Replace words with in environment links
+
+            div.innerHTML = plainResponse; // This will only run once
+>>>>>>> 100db467f4ec0d2ea94dae6f21b70caae560765c
             div.style.display = 'block';
             div.scrollTop = 0;
 

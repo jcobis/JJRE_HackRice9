@@ -2,35 +2,33 @@ var htmlString;
 
 function hrefExtracter(htmlString) {
   var array = [];
-  var i = htmlString.indexOf("!DOCTYPE");
-  while (i + 3 < htmlString.length) {
-    var substring = htmlString.substr(i, 4);
-    if (substring == "href") {
-      i = i + 7;
-      var linkAddOn = "";
-      if (htmlString.charAt(i) == '.') {
-        linkAddOn += htmlString.charAt(i);;
-        i += 1;
-        while (htmlString.charAt(i) != '\\' && i < htmlString.length) {
-          linkAddOn += htmlString.charAt(i);
-          i = i + 1;
-        }
-        while (htmlString.charAt(i) != '>' && i < htmlString.length) {
-          i += 1;
-        }
-        var newWord = "";
-        while (htmlString.charAt(i) != '<' && i < htmlString.length) {
-          newWord += htmlString.charAt(i);
-          i += 1;
-        }
-        var newLink = "<a href='#' onclick='TryToPopulateTip(" + linkAddOn + ");return false;'>" + newWord + "</a>";
-        if (newWord != "") {
-          array.push((newWord, newLink));
-        }
+  var start = htmlString.indexOf("!DOCTYPE");
+  while (start + 20 < htmlString.length) {
+
+    currentPos = start;
+    var substring = htmlString.substring(start, start + 20);
+    
+    if (substring == "<a rel=\"mw:WikiLink\"") {
+   
+      while (htmlString.substring(currentPos - 4, currentPos) != "</a>"){
+        currentPos += 1;
       }
-    } else {
-      i += 1;
-    }
+      end = currentPos; // Exclusive
+
+      linkString = htmlString.substring(start, end);
+
+
+
+      var el = document.createElement( 'a' );
+      el.innerHTML = linkString;
+      var wikiTitle = el.childNodes[0].title;
+      var text = el.childNodes[0].innerText;
+      var replacementForText = "<a href='#' onclick='TryToPopulateTip('" + wikiTitle + "');return false;'>" + text + "</a>";
+      array.push(text);
+      array.push(replacementForText);
+    } 
+    start = currentPos + 1;
   }
+  console.log(array);
   return array;
 }

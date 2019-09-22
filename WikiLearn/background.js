@@ -17,6 +17,10 @@
 // });
 
 chrome.runtime.onInstalled.addListener(function() {
+    // console.log("install");
+    // chrome.storage.sync.set({"wordCounter": 1}, function() {
+    //   console.log("counter initialized");
+    // });
     chrome.contextMenus.create({
       "id": "sampleContextMenu",
       "title": "Sample Context Menu",

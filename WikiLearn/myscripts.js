@@ -64,11 +64,12 @@ function tryToPopulateTip(title) {
 
         if (processesToWaitOn == 0) {
             plainResponse = plainResponse.replace("<b>","").replace("</b>","").replace("<i>","").replace("</i>","");
+            console.log(plainResponse);
 
             // Replace words with in environment links
             // First get the first link in the plaintext
             wordIndex = 0;
-            linkArray = hrefExtracter(htmlResponse, plainResponse.substring(plainResponse.indexOf('<p>')).split(" ")[0].substring(3));
+            linkArray = hrefExtracter(htmlResponse, plainResponse.substring(plainResponse.search('<p>[\\w]')).split(" ")[0].substring(3));
 
             // Logs words to console
             //console.log(plainResponse);
@@ -80,7 +81,7 @@ function tryToPopulateTip(title) {
 
             while (wordIndex < linkArray.length) {
                 if (plainResponse.includes(linkArray[wordIndex])) {
-                    //console.log("First: " + linkArray[wordIndex] );
+                    console.log("First: " + linkArray[wordIndex] );
                     break;
                 }
                 wordIndex += 2;
@@ -90,23 +91,37 @@ function tryToPopulateTip(title) {
 
             charSpot = plainResponse.indexOf(linkArray[wordIndex]);
             while (wordIndex < linkArray.length) {
-                searchPhrase = linkArray[wordIndex];
+                searchPhrase1 = linkArray[wordIndex];
+                if (wordIndex + 2 < linkArray.length) {
+                    searchPhrase2 = linkArray[wordIndex + 2];
+                }
+                if (wordIndex + 4 < linkArray.length) {
+                    searchPhrase3 = linkArray[wordIndex + 4];
+                }
 
-                // Break if theres no chance of finding the searchphrase anymore
-                if (charSpot + searchPhrase.length >= plainResponse.length){
+
+                // Break if we're done searching
+                if (charSpot >= plainResponse.length){
                     break;
                 }
 
-                // This code better work
-                if (plainResponse.substring(charSpot, charSpot + searchPhrase.length) == searchPhrase) {
-                    //console.log("Found: " + searchPhrase);
-                    plainResponse = plainResponse.substring(0, charSpot) + linkArray[wordIndex + 1] + plainResponse.substring(charSpot + searchPhrase.length);
-                    //charSpot += linkArray[wordIndex + 1].length;
+                // Whether we found one of the search phrases starting at this charSpot; if so, we will increment wordIndex
+                found = false;
+
+                // searchPhrase 1
+                if (charSpot + searchPhrase1.length < plainResponse.length && plainResponse.substring(charSpot, charSpot + searchPhrase1.length) == searchPhrase1) {
+                    plainResponse = plainResponse.substring(0, charSpot) + linkArray[wordIndex + 1] + plainResponse.substring(charSpot + searchPhrase1.length);
                     wordIndex += 2;
                 }
-
+                else if (charSpot + searchPhrase2.length < plainResponse.length && plainResponse.substring(charSpot, charSpot + searchPhrase2.length) == searchPhrase2) {
+                    plainResponse = plainResponse.substring(0, charSpot) + linkArray[wordIndex + 3] + plainResponse.substring(charSpot + searchPhrase2.length);
+                    wordIndex += 4;
+                }
+                else if (charSpot + searchPhrase3.length < plainResponse.length && plainResponse.substring(charSpot, charSpot + searchPhrase3.length) == searchPhrase3) {
+                    plainResponse = plainResponse.substring(0, charSpot) + linkArray[wordIndex + 5] + plainResponse.substring(charSpot + searchPhrase3.length);
+                    wordIndex += 6;
+                }
                 charSpot += 1;
-                //console.log(charSpot);
             }
 
             div.innerHTML = plainResponse; // This will only run once
@@ -118,14 +133,17 @@ function tryToPopulateTip(title) {
             for (i = startIndex; i < wordIndex; i+=2) {
                 text = linkArray[i];
                 button = document.getElementById(encodeURIComponent(text.trim()));
-                button.addEventListener('click', switchPage, false);
+                if(button){
+                    button.addEventListener('click', switchPage, false);
 
-                function switchPage(evt) {
-                    // console.log("wikiTitle: " + evt.target.wikiTitle);
-                    wikiData = evt.target.getAttribute('data-wiki');
-                    // console.log(wikiData);
-                    tryToPopulateTip(decodeURIComponent(wikiData));
+                    function switchPage(evt) {
+                        // console.log("wikiTitle: " + evt.target.wikiTitle);
+                        wikiData = evt.target.getAttribute('data-wiki');
+                        // console.log(wikiData);
+                        tryToPopulateTip(decodeURIComponent(wikiData));
+                    }
                 }
+                
             }
         }
     }

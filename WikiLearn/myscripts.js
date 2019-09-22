@@ -57,7 +57,7 @@ function tryToPopulateTip(title) {
 
     // Waits until both responses come in to change page
     function actOnResponse (content) {
-        
+
         processesToWaitOn--;
         if (processesToWaitOn == 0) {
             div.innerHTML = plainResponse; // This will only run once
@@ -69,7 +69,7 @@ function tryToPopulateTip(title) {
         }
 
     }
-    
+
     // Plain request handling
     fetch(plainAPIEndpoint + "?" + plainParams + "&origin=*")
         .then(function(response){return response.json();})
@@ -79,15 +79,13 @@ function tryToPopulateTip(title) {
                 for (var page in pages) {
                   var content = pages[page].extract;
                   if (content) {
-                    
+                    // Showing new wikipedia page:
+
                     plainResponse = content;
                     actOnResponse(content);
 
-                    // Showing new wikipedia page:
-                    // storeWord(pages[page].title)
-                    // chrome.storage.sync.get("key", function (obj) {
-                    //   console.log(obj);
-                    // });
+                    console.log(pages[page].title);
+                    storeWord(pages[page].title);
                   }
                   break;
               }
@@ -106,13 +104,6 @@ function tryToPopulateTip(title) {
                     htmlResponse = content;
                     actOnResponse(content);
                 }
-                
-                console.log(pages[page].title);
-                storeWord(pages[page].title);
-
-                chrome.storage.sync.get(pages[page].title, function(obj) {
-                  console.log("Finished storing: " + obj);
-                });
               }
             });
 
@@ -121,28 +112,53 @@ function tryToPopulateTip(title) {
 
 
 function storeWord(word) {
-  chrome.storage.sync.get(word, function(data) {
-    if (typeof data.word === 'undefined') { // undefined without quotes?
-      chrome.storage.sync.set({[word]: "stored" }, function() {
-          console.log("Stored: "+ word);
-      });
-
-      chrome.storage.sync.get("wordCounter", function(data2) {
-        if (typeof data2.word === 'undefined') { // undefined without quotes?
-          chrome.storage.sync.set({"wordCounter": 1}, function(data3) {
-            console.log("Setting wordCounter to 1: " + data3.wordCounter);
-          });
-        } else {
-          console.log("wordCounter previously: " + data2.wordCounter)
-          chrome.storage.sync.set({"wordCounter": data2.wordCounter + 1}, function(data3) {
-            console.log("wordCounter now: " + data3.wordCounter);
-          });
-        }
-      });
-    } else {
-      console.log("Already have stored: " + data.word);
-    }
+  var defaultValue = 0;
+  console.log("Store Word");
+  chrome.storage.sync.get({wordCount: defaultValue}, function(data) {
+    chrome.storage.sync.set({wordCount: data.wordCount + 1}, function() {
+      console.log("wordCount: " + data.wordCount);
+    });
   });
+
+  // chrome.storage.sync.get("wordCounter", function(data2) {
+  //       if (typeof data2.word === 'undefined') { // undefined without quotes?
+  //         // Instantiate counter
+  //         chrome.storage.sync.set({"wordCounter": 1}, function() {
+  //           //console.log("Setting wordCounter to 1: " + data3.wordCounter);
+  //         });
+  //       } else {
+  //         console.log(wordCounter)
+  //         console.log("wordCounter previously: " + data2.wordCounter)
+  //         chrome.storage.sync.set({"wordCounter": data2.wordCounter + 1}, function(data3) {
+  //           console.log("wordCounter now: " + data3.wordCounter);
+  //         });
+  //       }
+  //     });
+  // console.log("storeWord called: " + word)
+  // chrome.storage.sync.get([word], function(data) {
+  //   console.log("data.word: " + data.word)
+  //   if (typeof data.word === 'undefined') { // undefined without quotes?
+  //     chrome.storage.sync.set({[word]: "stored"}, function(result) {
+  //         console.log("Stored: " + word);
+  //         console.log(result)
+  //     });
+      // chrome.storage.sync.get("wordCounter", function(data2) {
+      //   if (typeof data2.word === 'undefined') { // undefined without quotes?
+      //     // Instantiate counter
+      //     chrome.storage.sync.set({"wordCounter": 1}, function(data3) {
+      //       console.log("Setting wordCounter to 1: " + data3.wordCounter);
+      //     });
+      //   } else {
+      //     console.log("wordCounter previously: " + data2.wordCounter)
+      //     chrome.storage.sync.set({"wordCounter": data2.wordCounter + 1}, function(data3) {
+      //       console.log("wordCounter now: " + data3.wordCounter);
+      //     });
+      //   }
+      // });
+    // } else {
+    //   console.log("Already have stored: " + data.word);
+    // }
+  // });
 
   // chrome.storage.sync.get([word], function(result) {
   //   if (result[word] === undefined) {
@@ -168,28 +184,6 @@ function getWord(key) {
   chrome.storage.sync.get(key, function(data) { console.log(Object.values(data)[0].val); })
 }
 
-
-// const setStorageData = data =>
-//   new Promise((resolve, reject) =>
-//     chrome.storage.sync.set(data, () =>
-//       chrome.runtime.lastError
-//         ? reject(Error(chrome.runtime.lastError.message))
-//         : resolve()
-//     )
-//   )
-
-// await setStorageData({ data: [someData] })
-
-// const getStorageData = key =>
-//   new Promise((resolve, reject) =>
-//     chrome.storage.sync.get(key, result =>
-//       chrome.runtime.lastError
-//         ? reject(Error(chrome.runtime.lastError.message))
-//         : resolve(result)
-//     )
-//   )
-
-// const { data } = await getStorageData('data')
 
 // Show tip when text selected
 // document.onmouseup = selectionTip;
@@ -243,10 +237,3 @@ window.addEventListener("keypress", function(event) {
         alert('message passing time.');
     }
 })
-
-
-
-// IDEAS
-// Might want disambugation support, link following through the popup, wikipedia interface
-// WIKIPEDIA INTEGRATION with article reading, maybe sharing screen or something
-// Preload and make calls for common words on the page (but make sure to impose 200 limits? Or for different API)

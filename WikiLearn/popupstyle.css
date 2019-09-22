@@ -1,5 +1,5 @@
 body {
-  height: 100px;
+  height: 125px;
   width: 275px;
 }
 
@@ -9,6 +9,10 @@ h1 {
   font-family: 'Noto Sans';
 }
 
+#scoreWrapper {
+  text-align: center;
+}
+
 #buttonWrapper {
   text-align: center;
 }
@@ -16,6 +20,7 @@ h1 {
 button#checkPage {
   background-color: rgb(182, 77, 80);
   border: none;
+  border-radius: 8px;
   color: white;
   padding: 15px 32px;
   margin: auto;
@@ -24,6 +29,14 @@ button#checkPage {
   display: inline-block;
   font-size: 16px;
   font-family: 'Noto Sans';
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+button#checkPage:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  cursor:pointer;
 }
 
 button#checkPage.active {

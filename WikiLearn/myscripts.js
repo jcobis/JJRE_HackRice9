@@ -15,7 +15,6 @@ var div = document.createElement('div');
 div.id = 'wikipediaTooltip';
 document.body.appendChild( div );
 
-
 // Function name pretty self explanatory, no?
 function setTipLocationToSelection() {
     var sel = document.getSelection();

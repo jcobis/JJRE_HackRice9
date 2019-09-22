@@ -44,7 +44,7 @@ function selectionTip() {
 // Makes a request to wikipedia and populates the tip if the request returns succesfully
 function tryToPopulateTip(title) {
 
-    console.log("Initial title: " + title);
+    // console.log("Initial title: " + title);
 
     var plainAPIEndpoint = "https://en.wikipedia.org/w/api.php";
     var plainParams = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"
@@ -99,7 +99,7 @@ function tryToPopulateTip(title) {
 
                 // This code better work
                 if (plainResponse.substring(charSpot, charSpot + searchPhrase.length) == searchPhrase) {
-                    // console.log("Found: " + searchPhrase);
+                    //console.log("Found: " + searchPhrase);
                     plainResponse = plainResponse.substring(0, charSpot) + linkArray[wordIndex + 1] + plainResponse.substring(charSpot + searchPhrase.length);
                     //charSpot += linkArray[wordIndex + 1].length;
                     wordIndex += 2;

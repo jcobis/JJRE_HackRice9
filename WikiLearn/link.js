@@ -1,8 +1,12 @@
 var htmlString;
 
 function hrefExtracter(htmlString, firstWord) {
+  firstWord = firstWord.replace(new RegExp("\\b[^\\w]"), "");
   var array = [];
   var start = htmlString.search("<p[^>]*>.{0,20}" + firstWord);
+  //console.log(htmlString.substring(start, start + 100));
+  //console.log(start);
+  //console.log("<p[^>]*>.{0,20}" + firstWord);
   while (start + 20 < htmlString.length) {
 
     currentPos = start;

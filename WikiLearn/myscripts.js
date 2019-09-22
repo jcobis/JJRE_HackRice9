@@ -60,12 +60,12 @@ function tryToPopulateTip(title) {
 
         processesToWaitOn--;
         if (processesToWaitOn == 0) {
-            div.innerHTML = plainResponse; // This will only run once
+            div.innerHTML = htmlResponse; // This will only run once
             div.style.display = 'block';
             div.scrollTop = 0;
 
             links = hrefExtracter(htmlResponse);
-         
+
         }
 
     }
@@ -79,13 +79,17 @@ function tryToPopulateTip(title) {
                 for (var page in pages) {
                   var content = pages[page].extract;
                   if (content) {
-                    // Showing new wikipedia page:
 
                     plainResponse = content;
                     actOnResponse(content);
 
+                    // Showing new wikipedia page:
                     console.log(pages[page].title);
                     storeWord(pages[page].title);
+
+                    // chrome.storage.sync.get(pages[page].title, function(obj) {
+                    //   console.log("Finished storing: " + obj);
+                    // });
                   }
                   break;
               }
@@ -104,6 +108,13 @@ function tryToPopulateTip(title) {
                     htmlResponse = content;
                     actOnResponse(content);
                 }
+
+                console.log(pages[page].title);
+                storeWord(pages[page].title);
+
+                chrome.storage.sync.get(pages[page].title, function(obj) {
+                  console.log("Finished storing: " + obj);
+                });
               }
             });
 
@@ -185,6 +196,28 @@ function getWord(key) {
 }
 
 
+// const setStorageData = data =>
+//   new Promise((resolve, reject) =>
+//     chrome.storage.sync.set(data, () =>
+//       chrome.runtime.lastError
+//         ? reject(Error(chrome.runtime.lastError.message))
+//         : resolve()
+//     )
+//   )
+
+// await setStorageData({ data: [someData] })
+
+// const getStorageData = key =>
+//   new Promise((resolve, reject) =>
+//     chrome.storage.sync.get(key, result =>
+//       chrome.runtime.lastError
+//         ? reject(Error(chrome.runtime.lastError.message))
+//         : resolve(result)
+//     )
+//   )
+
+// const { data } = await getStorageData('data')
+
 // Show tip when text selected
 // document.onmouseup = selectionTip;
 
@@ -200,7 +233,7 @@ function showAndHideListeners(element) {
           element.style.display = 'none';
         }
         if (event.ctrlKey) {
-            console.log("held!");  
+            console.log("held!");
         }
 
     };
@@ -237,3 +270,10 @@ window.addEventListener("keypress", function(event) {
         alert('message passing time.');
     }
 })
+
+
+
+// IDEAS
+// Might want disambugation support, link following through the popup, wikipedia interface
+// WIKIPEDIA INTEGRATION with article reading, maybe sharing screen or something
+// Preload and make calls for common words on the page (but make sure to impose 200 limits? Or for different API)

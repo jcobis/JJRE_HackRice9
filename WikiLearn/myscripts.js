@@ -89,7 +89,7 @@ function tryToPopulateTip(title) {
               if (pages) {
                 for (var page in pages) {
                   var content = pages[page].extract;
-                  if (content) {{}
+                  if (content) {
 
                     plainResponse = content;
                     actOnResponse(content);

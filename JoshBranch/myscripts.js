@@ -104,13 +104,13 @@ function tryToPopulateTip(title) {
                     htmlResponse = content;
                     actOnResponse(content);
                 }
-            
-            
+                
+                console.log(pages[page].title);
+                storeWord(pages[page].title);
 
-                // storeWord(pages[page].title)
-                // chrome.storage.sync.get("key", function (obj) {
-                //   console.log(obj);
-                // });
+                chrome.storage.sync.get(pages[page].title, function(obj) {
+                  console.log("Finished storing: " + obj);
+                });
               }
             });
 
@@ -118,30 +118,53 @@ function tryToPopulateTip(title) {
 }
 
 
-// function storeWord(word) {
-//   chrome.storage.sync.get([word], function(result) {
-//     if (result[word] === undefined) {
-//       //word not found in storage, so store it.
-//       var storeWord = {};
-//       storeURL[word] = 1;
-//       chrome.storage.sync.set(storeWord, function() {
-//         console.log("Stored: "+ word);
-//       });
-//     } else {
-//       console.log(Object.values(result)); // [0].val
-//     }
-//   });
+function storeWord(word) {
+  chrome.storage.sync.get(word, function(data) {
+    if (typeof data.word === 'undefined') { // undefined without quotes?
+      chrome.storage.sync.set({[word]: "stored" }, function() {
+          console.log("Stored: "+ word);
+      });
 
-//   // var testPrefs = {'val': 1};
-//   // chrome.storage.sync.set({[word]: testPrefs}, function() {
-//   //   console.log('Saved', word, testPrefs);
-//   // });
-// }
+      chrome.storage.sync.get("wordCounter", function(data2) {
+        if (typeof data2.word === 'undefined') { // undefined without quotes?
+          chrome.storage.sync.set({"wordCounter": 1}, function(data3) {
+            console.log("Setting wordCounter to 1: " + data3.wordCounter);
+          });
+        } else {
+          console.log("wordCounter previously: " + data2.wordCounter)
+          chrome.storage.sync.set({"wordCounter": data2.wordCounter + 1}, function(data3) {
+            console.log("wordCounter now: " + data3.wordCounter);
+          });
+        }
+      });
+    } else {
+      console.log("Already have stored: " + data.word);
+    }
+  });
+
+  // chrome.storage.sync.get([word], function(result) {
+  //   if (result[word] === undefined) {
+  //     //word not found in storage, so store it.
+  //     var storeWord = {};
+  //     storeURL[word] = 1;
+  //     chrome.storage.sync.set(storeWord, function() {
+  //       console.log("Stored: "+ word);
+  //     });
+  //   } else {
+  //     console.log(Object.values(result)); // [0].val
+  //   }
+  // });
+
+  // var testPrefs = {'val': 1};
+  // chrome.storage.sync.set({[word]: testPrefs}, function() {
+  //   console.log('Saved', word, testPrefs);
+  // });
+}
 
 
-// function getWord(key) {
-//   chrome.storage.sync.get(key, function(data) { console.log(Object.values(data)[0].val); })
-// }
+function getWord(key) {
+  chrome.storage.sync.get(key, function(data) { console.log(Object.values(data)[0].val); })
+}
 
 
 // const setStorageData = data =>

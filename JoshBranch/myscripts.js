@@ -124,10 +124,6 @@ function tryToPopulateTip(title) {
 
 // const { data } = await getStorageData('data')
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 44da6b74c717790c6f8a50354f0351f5a51dd4b8
 // Show tip when text selected
 // document.onmouseup = selectionTip;
 

@@ -60,9 +60,13 @@ function tryToPopulateTip(title) {
         
         processesToWaitOn--;
         if (processesToWaitOn == 0) {
-            div.innerHTML = htmlResponse; // This will only run once
+            div.innerHTML = plainResponse; // This will only run once
             div.style.display = 'block';
             div.scrollTop = 0;
+
+            links = hrefExtracter(htmlResponse);
+            console.log(links);
+            console.log(links[1]);
         }
 
     }
@@ -98,7 +102,6 @@ function tryToPopulateTip(title) {
               var content = response.visualeditor
               if (content) {
                 content = content.content;
-                console.log(content)
 
                 if (content) {
                     htmlResponse = content;

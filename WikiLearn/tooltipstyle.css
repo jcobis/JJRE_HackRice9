@@ -17,8 +17,20 @@ div#wikipediaTooltip {
 
 /* there is a lot of redundant style here but I think it's necessary because of the all: initial */
 
-div#wikipediaTooltip > p, div#wikipediaTooltip > ul {
+div#wikipediaTooltip > p, div#wikipediaTooltip > dl {
   all: initial; /* to get rid of css that's already on the page */
+
+  display: block;
+  text-align: justify;
+  font-family: 'Noto Serif';
+  font-size: 10pt;
+  line-height: 1.5em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+div#wikipediaTooltip > ul {
+  all: initial;
 
   display: block;
   text-align: justify;

@@ -85,6 +85,7 @@ function tryToPopulateTip(title) {
                     // Showing new wikipedia page:
                     div.innerHTML = content; // This will only run once
                     div.style.display = 'block';
+                    div.scrollTop = 0; // reset scrolling
                     storeWord(pages[page].title)
                     // chrome.storage.sync.get("key", function (obj) {
                     //   console.log(obj);
@@ -121,13 +122,11 @@ function tryToPopulateTip(title) {
 
 // const { data } = await getStorageData('data')
 
-
-
 // Show tip when text selected
 // document.onmouseup = selectionTip;
 
 // If the window is not visisible and you release a click with highlighted text, it shows the window
-// If the window is visisible and you click outside the screen, it hides the window
+// If the window is visible and you click outside the screen, it hides the window
 // Partial source https://stackoverflow.com/questions/152975/how-do-i-detect-a-click-outside-an-element
 function showAndHideListeners(element) {
 

@@ -1,7 +1,6 @@
 // Wikipedia tooltip div
-// TODO: move style things to a CSS file ?
 
-// adding fonts. for some reason this doesn't work in the CSS so it's going here:
+// Adding fonts. for some reason this doesn't work in the CSS so it's going here:
 var fontId = 'fonts';
 if (!document.getElementById(fontId)) {
   var fonts = document.createElement('link');
@@ -25,6 +24,7 @@ function setTipLocationToSelection() {
     div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
 }
 
+
 // Try to use the current selection to show a tip in the right location and populate it with text too
 function selectionTip() {
 
@@ -41,30 +41,6 @@ function selectionTip() {
     }
 };
 
-
-function storeWord(word) {
-  chrome.storage.sync.get([word], function(result) {
-    if (result[word] === undefined) {
-      //word not found in storage, so store it.
-      var storeWord = {};
-      storeURL[word] = 1;
-      chrome.storage.sync.set(storeWord, function() {
-        console.log("Stored: "+ word);
-      });
-    } else {
-      console.log(Object.values(result)); // [0].val
-    }
-  });
-
-  // var testPrefs = {'val': 1};
-  // chrome.storage.sync.set({[word]: testPrefs}, function() {
-  //   console.log('Saved', word, testPrefs);
-  // });
-}
-
-function getWord(key) {
-  chrome.storage.sync.get(key, function(data) { console.log(Object.values(data)[0].val); })
-}
 
 // Makes a request to wikipedia and populates the tip if the request returns succesfully
 function tryToPopulateTip(title) {
@@ -86,6 +62,7 @@ function tryToPopulateTip(title) {
         if (processesToWaitOn == 0) {
             div.innerHTML = htmlResponse; // This will only run once
             div.style.display = 'block';
+            div.scrollTop = 0;
         }
 
     }
@@ -104,10 +81,6 @@ function tryToPopulateTip(title) {
                     actOnResponse(content);
 
                     // Showing new wikipedia page:
-                    // div.innerHTML = content; // This will only run once
-                    // div.style.display = 'block';
-                    
-
                     // storeWord(pages[page].title)
                     // chrome.storage.sync.get("key", function (obj) {
                     //   console.log(obj);
@@ -145,6 +118,32 @@ function tryToPopulateTip(title) {
 }
 
 
+// function storeWord(word) {
+//   chrome.storage.sync.get([word], function(result) {
+//     if (result[word] === undefined) {
+//       //word not found in storage, so store it.
+//       var storeWord = {};
+//       storeURL[word] = 1;
+//       chrome.storage.sync.set(storeWord, function() {
+//         console.log("Stored: "+ word);
+//       });
+//     } else {
+//       console.log(Object.values(result)); // [0].val
+//     }
+//   });
+
+//   // var testPrefs = {'val': 1};
+//   // chrome.storage.sync.set({[word]: testPrefs}, function() {
+//   //   console.log('Saved', word, testPrefs);
+//   // });
+// }
+
+
+// function getWord(key) {
+//   chrome.storage.sync.get(key, function(data) { console.log(Object.values(data)[0].val); })
+// }
+
+
 // const setStorageData = data =>
 //   new Promise((resolve, reject) =>
 //     chrome.storage.sync.set(data, () =>
@@ -167,13 +166,11 @@ function tryToPopulateTip(title) {
 
 // const { data } = await getStorageData('data')
 
-
-
 // Show tip when text selected
 // document.onmouseup = selectionTip;
 
 // If the window is not visisible and you release a click with highlighted text, it shows the window
-// If the window is visisible and you click outside the screen, it hides the window
+// If the window is visible and you click outside the screen, it hides the window
 // Partial source https://stackoverflow.com/questions/152975/how-do-i-detect-a-click-outside-an-element
 function showAndHideListeners(element) {
 

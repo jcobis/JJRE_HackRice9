@@ -69,23 +69,46 @@ function getWord(key) {
 // Makes a request to wikipedia and populates the tip if the request returns succesfully
 function tryToPopulateTip(title) {
 
-    var apiEndpoint = "https://en.wikipedia.org/w/api.php";
-    var params = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"
+    var plainAPIEndpoint = "https://en.wikipedia.org/w/api.php";
+    var plainParams = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"
 
-    // Send the request and replace tip when the request returns
-    fetch(apiEndpoint + "?" + params + "&origin=*")
+    var htmlAPIEndpoint = "https://en.wikipedia.org/w/api.php";
+    var htmlParams = "format=json&action=visualeditor&paction=parse&page=" + encodeURIComponent(title.trim()) + "&redirects=true"
+
+    var processesToWaitOn = 2;
+    var plainResponse = "";
+    var htmlResponse = "";
+
+    // Waits until both responses come in to change page
+    function actOnResponse (content) {
+        
+        processesToWaitOn--;
+        if (processesToWaitOn == 0) {
+            div.innerHTML = htmlResponse; // This will only run once
+            div.style.display = 'block';
+        }
+
+    }
+    
+    // Plain request handling
+    fetch(plainAPIEndpoint + "?" + plainParams + "&origin=*")
         .then(function(response){return response.json();})
         .then(function(response) {
-              console.log(response)
               var pages = response.query.pages;
               if (pages) {
                 for (var page in pages) {
                   var content = pages[page].extract;
                   if (content) {
+                    
+                    plainResponse = content;
+                    actOnResponse(content);
+
                     // Showing new wikipedia page:
-                    div.innerHTML = content; // This will only run once
-                    div.style.display = 'block';
-                    storeWord(pages[page].title)
+                    // div.innerHTML = content; // This will only run once
+                    // div.style.display = 'block';
+                    
+
+                    // storeWord(pages[page].title)
                     // chrome.storage.sync.get("key", function (obj) {
                     //   console.log(obj);
                     // });
@@ -94,6 +117,29 @@ function tryToPopulateTip(title) {
               }
             }
         });
+
+    // HTML request handling
+    fetch(htmlAPIEndpoint + "?" + htmlParams + "&origin=*")
+        .then(function(response){return response.json();})
+        .then(function(response) {
+              var content = response.visualeditor
+              if (content) {
+                content = content.content;
+                console.log(content)
+
+                if (content) {
+                    htmlResponse = content;
+                    actOnResponse(content);
+                }
+            
+            
+
+                // storeWord(pages[page].title)
+                // chrome.storage.sync.get("key", function (obj) {
+                //   console.log(obj);
+                // });
+              }
+            });
 
     return false;
 }
@@ -157,7 +203,6 @@ function showAndHideListeners(element) {
             }
         }
     }
-
 
     document.addEventListener('click', outsideClickListener);
     document.addEventListener('mouseup', selectionShower)

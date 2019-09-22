@@ -1,11 +1,8 @@
 var htmlString;
 
 function hrefExtracter(htmlString, firstWord) {
-  console.log(firstWord);
   var array = [];
-  var start = htmlString.indexOf(">" + firstWord);
-  console.log(start);
-  //console.log(htmlString);
+  var start = htmlString.search("<p[^>]*>.{0,20}" + firstWord);
   while (start + 20 < htmlString.length) {
 
     currentPos = start;

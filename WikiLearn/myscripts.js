@@ -44,20 +44,18 @@ function selectionTip() {
 // Makes a request to wikipedia and populates the tip if the request returns succesfully
 function tryToPopulateTip(title) {
 
-    console.log(title);
+    console.log("Initial title: " + title);
 
     var plainAPIEndpoint = "https://en.wikipedia.org/w/api.php";
     var plainParams = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"
 
-    var htmlAPIEndpoint = "https://en.wikipedia.org/w/api.php";
-    var htmlParams = "format=json&action=visualeditor&paction=parse&page=" + encodeURIComponent(title.trim()) + "&redirects=true"
 
     var processesToWaitOn = 2;
     var plainResponse = "";
     var htmlResponse = "";
 
-    console.log(htmlAPIEndpoint + "?" + htmlParams + "&origin=*");
-    console.log(plainAPIEndpoint + "?" + plainParams + "&origin=*");
+    // console.log(htmlAPIEndpoint + "?" + htmlParams + "&origin=*");
+    // console.log("plainAPIEndpoint: " + plainAPIEndpoint + "?" + plainParams + "&origin=*");
 
 
     // Waits until both responses come in to change page
@@ -101,7 +99,7 @@ function tryToPopulateTip(title) {
 
                 // This code better work
                 if (plainResponse.substring(charSpot, charSpot + searchPhrase.length) == searchPhrase) {
-                    console.log("Found: " + searchPhrase);
+                    // console.log("Found: " + searchPhrase);
                     plainResponse = plainResponse.substring(0, charSpot) + linkArray[wordIndex + 1] + plainResponse.substring(charSpot + searchPhrase.length);
                     //charSpot += linkArray[wordIndex + 1].length;
                     wordIndex += 2;
@@ -123,9 +121,9 @@ function tryToPopulateTip(title) {
                 button.addEventListener('click', switchPage, false);
 
                 function switchPage(evt) {
-                    console.log("wikiTitle: " + evt.target.wikiTitle);
+                    // console.log("wikiTitle: " + evt.target.wikiTitle);
                     wikiData = evt.target.getAttribute('data-wiki');
-                    console.log(wikiData);
+                    // console.log(wikiData);
                     tryToPopulateTip(decodeURIComponent(wikiData));
                 }
             }
@@ -144,6 +142,7 @@ function tryToPopulateTip(title) {
                   // Showing new wikipedia page:
                   plainResponse = content;
                   actOnResponse(content);
+                  getHTML(pages[page].title);
 
                   //console.log(pages[page].title);
                   storeWord(pages[page].title);
@@ -153,22 +152,32 @@ function tryToPopulateTip(title) {
             }
         });
 
+
     // HTML request handling
-    fetch(htmlAPIEndpoint + "?" + htmlParams + "&origin=*")
-        .then(function(response){return response.json();})
-        .then(function(response) {
-              var content = response.visualeditor
-              if (content) {
-                content = content.content;
+    function getHTML(t) {
+        
+        // console.log("getting html: " + t)
+        var htmlAPIEndpoint = "https://en.wikipedia.org/w/api.php";
+        var htmlParams = "format=json&action=visualeditor&paction=parse&page=" + encodeURIComponent(t.trim()) + "&redirects=true"
 
-                if (content) {
-                    htmlResponse = content;
-                    actOnResponse(content);
-                }
-              }
-            });
+        fetch(htmlAPIEndpoint + "?" + htmlParams + "&origin=*")
+            .then(function(response){return response.json();})
+            .then(function(response) {
+                  var content = response.visualeditor
+                  if (content) {
 
-    return false;
+
+                    content = content.content;
+
+                    if (content) {
+                        htmlResponse = content;
+                        actOnResponse(content);
+                    }
+                  }
+                });
+        }
+
+
 }
 
 

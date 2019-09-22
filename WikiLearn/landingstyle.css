@@ -8,7 +8,7 @@ body {
 }
 
 #mainBody {
-  width: 40%;
+  width: 60%;
   margin: 0 auto;
 }
 
@@ -18,9 +18,11 @@ h1 {
   font-style: italic;
   text-align: center;
   color: var(--fg-color);
+  color: #FFFFFF;
 }
 
 h2 {
+  margin-top: 20px;
   font-size: 50px;
   font-style: italic;
   font-family: 'Noto Serif';
@@ -28,15 +30,53 @@ h2 {
 }
 
 h5 {
-  font-size: 26px;
+  font-size: 24px;
   font-family: 'Inconsolata';
   line-height: 1.2em;
-  color: var(--fg-color);
+  color: #FFFFFF;
 }
 
 img {
   display: block;
   margin: 0 auto;
-  width: 80%;
-  padding: 2%
+  width: 77%;
+  padding: 3%
+}
+
+.img-container {
+  position: relative;
+  width: 100%;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 2%;
+  right: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  opacity: 90%;
+  background-color: #333333;
+  border-radius: 2px;
+  overflow: hidden;
+  width: 86%;
+  height: 0;
+  -webkit-transition-duration: 0.5s ease; /* Safari */
+  transition: 0.5s ease;
+}
+
+.img-container:hover .overlay {
+  height: 10%;
+}
+
+.text {
+  padding: 4px;
+  color: white;
+  font-size: 1.5vw;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }

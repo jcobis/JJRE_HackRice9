@@ -57,26 +57,33 @@ function tryToPopulateTip(title) {
     var plainResponse = "";
     var htmlResponse = "";
 
+    console.log(htmlAPIEndpoint + "?" + htmlParams + "&origin=*");
+    console.log(plainAPIEndpoint + "?" + plainParams + "&origin=*");
+
+
     // Waits until both responses come in to change page
     function actOnResponse (content) {
 
         processesToWaitOn--;
 
-        console.log("One");
 
 
         if (processesToWaitOn == 0) {
 
+
+            plainResponse = plainResponse.replace("<b>","").replace("</b>","").replace("<i>","").replace("</i>","");
+
             // Replace words with in environment links
             // First get the first link in the plaintext
             wordIndex = 0;
-            linkArray = hrefExtracter(htmlResponse);
+            linkArray = hrefExtracter(htmlResponse, plainResponse.substring(plainResponse.indexOf('<p>')).split(" ")[0].substring(3));
+            //console.log(plainResponse);
 
             // Logs words to console
-            console.log(plainResponse);
+            //console.log(plainResponse);
             temp = 0;
             while (temp < linkArray.length) {
-                console.log("Word: " + linkArray[temp]);
+                //console.log("Word: " + linkArray[temp]);
                 temp += 2;
             }
 
@@ -84,7 +91,7 @@ function tryToPopulateTip(title) {
             while (wordIndex < linkArray.length) {
                 
                 if (plainResponse.includes(linkArray[wordIndex])) {
-                    console.log("First: " + linkArray[wordIndex] );
+                    //console.log("First: " + linkArray[wordIndex] );
                     break;
                 }
                 wordIndex += 2;

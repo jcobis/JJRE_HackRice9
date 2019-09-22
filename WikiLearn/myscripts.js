@@ -144,7 +144,7 @@ function tryToPopulateTip(title) {
                         tryToPopulateTip(decodeURIComponent(wikiData));
                     }
                 }
-                
+
             }
         }
     }

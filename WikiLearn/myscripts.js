@@ -117,10 +117,10 @@ function tryToPopulateTip(title) {
 
 function storeWord(word) {
   var defaultValue = 0;
-  console.log("Store Word")
+  console.log("Store Word");
   chrome.storage.sync.get({wordCount: defaultValue}, function(data) {
     chrome.storage.sync.set({wordCount: data.wordCount + 1}, function() {
-      console.log(data.wordCount)
+      console.log("wordCount: " + data.wordCount);
     });
   });
 

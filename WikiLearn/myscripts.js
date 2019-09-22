@@ -65,8 +65,7 @@ function tryToPopulateTip(title) {
             div.scrollTop = 0;
 
             links = hrefExtracter(htmlResponse);
-            console.log(links);
-            console.log(links[1]);
+         
         }
 
     }
@@ -183,6 +182,9 @@ function showAndHideListeners(element) {
         if (!element.contains(event.target) && isVisible(element)) { // or use: event.target.closest(selector) === null
           element.style.display = 'none';
         }
+        if (event.ctrlKey) {
+            console.log("held!");  
+        }
 
     };
 
@@ -210,6 +212,16 @@ function showAndHideListeners(element) {
 
 const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length ); // source (2018-03-11): https://github.com/jquery/jquery/blob/master/src/css/hiddenVisibleSelectors.js
 showAndHideListeners(div);
+
+// Event listener for pressing 'w' and passing a message to open a new tab
+window.addEventListener("keypress", function(event) {
+    console.log(event.keyCode);
+    if (event.keyCode == 119 && isVisible(div)) {
+        alert('message passing time.');
+    }
+})
+
+
 
 // IDEAS
 // Might want disambugation support, link following through the popup, wikipedia interface

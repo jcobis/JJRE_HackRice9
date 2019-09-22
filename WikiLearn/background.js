@@ -12,11 +12,19 @@
 
 // chrome.runtime.onMessage.addListener((msg, sender) => {
 //   // First, validate the message's structure.
-//   if ((msg.from === 'content') && (msg.subject === 'showPageAction')) {
+//   if ((msg.from === 'content')) {
 //     // Enable the page-action for the requesting tab.
-//     chrome.pageAction.show(sender.tab.id);
+//     alert(msg.newTab);
 //   }
 // });
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.url){
+      var newURL = request.url;
+      chrome.tabs.create({ url: newURL });
+    }
+  });
 
 // // The onClicked callback function.
 // function onClickHandler(info, tab) {

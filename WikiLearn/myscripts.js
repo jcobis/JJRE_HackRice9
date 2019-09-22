@@ -276,6 +276,22 @@ window.addEventListener("keypress", function(event) {
 })
 
 
+// chrome.runtime.onMessage.addListener((msg, sender, response) => {
+//   // First, validate the message's structure.
+//   if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
+//     // Collect the necessary data. 
+//     // (For your specific requirements `document.querySelectorAll(...)`
+//     //  should be equivalent to jquery's `$(...)`.)
+//     var domInfo = {
+//       total: ,
+//     };
+
+//     // Directly respond to the sender (popup), 
+//     // through the specified callback.
+//     response(domInfo);
+//   }
+// });
+
 
 // IDEAS
 // Might want disambugation support, link following through the popup, wikipedia interface

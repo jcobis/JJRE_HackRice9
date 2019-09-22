@@ -79,17 +79,13 @@ function tryToPopulateTip(title) {
                 for (var page in pages) {
                   var content = pages[page].extract;
                   if (content) {
+                    // Showing new wikipedia page:
 
                     plainResponse = content;
                     actOnResponse(content);
 
-                    // Showing new wikipedia page:
                     console.log(pages[page].title);
                     storeWord(pages[page].title);
-
-                    // chrome.storage.sync.get(pages[page].title, function(obj) {
-                    //   console.log("Finished storing: " + obj);
-                    // });
                   }
                   break;
               }
@@ -108,13 +104,6 @@ function tryToPopulateTip(title) {
                     htmlResponse = content;
                     actOnResponse(content);
                 }
-
-                console.log(pages[page].title);
-                storeWord(pages[page].title);
-
-                chrome.storage.sync.get(pages[page].title, function(obj) {
-                  console.log("Finished storing: " + obj);
-                });
               }
             });
 

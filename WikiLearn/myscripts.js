@@ -64,12 +64,19 @@ function tryToPopulateTip(title) {
             var toDisplay = plainResponse;
 
             // Replace words with in environment links
+            // First get the first link in the plaintext
+            firstInText = 0;
+            linkArray = hrefExtracter(htmlResponse);
+            while (firstInText < linkArray.length) {
+                
+                firstInText += 2
+            }
+
 
             div.innerHTML = plainResponse; // This will only run once
             div.style.display = 'block';
             div.scrollTop = 0;
 
-            links = hrefExtracter(htmlResponse);
          
         }
 

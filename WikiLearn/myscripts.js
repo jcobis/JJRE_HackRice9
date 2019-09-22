@@ -120,9 +120,6 @@ function tryToPopulateTip(title) {
                     actOnResponse(content);
                 }
 
-                console.log(pages[page].title);
-                storeWord(pages[page].title);
-
                 chrome.storage.sync.get(pages[page].title, function(obj) {
                   console.log("Finished storing: " + obj);
                 });

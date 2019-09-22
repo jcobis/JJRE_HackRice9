@@ -65,8 +65,7 @@ function tryToPopulateTip(title) {
             div.scrollTop = 0;
 
             links = hrefExtracter(htmlResponse);
-            console.log(links);
-            console.log(links[1]);
+         
         }
 
     }
@@ -85,9 +84,11 @@ function tryToPopulateTip(title) {
                     actOnResponse(content);
 
                     // Showing new wikipedia page:
-                    // storeWord(pages[page].title)
-                    // chrome.storage.sync.get("key", function (obj) {
-                    //   console.log(obj);
+                    console.log(pages[page].title);
+                    storeWord(pages[page].title);
+
+                    // chrome.storage.sync.get(pages[page].title, function(obj) {
+                    //   console.log("Finished storing: " + obj);
                     // });
                   }
                   break;
@@ -107,6 +108,7 @@ function tryToPopulateTip(title) {
                     htmlResponse = content;
                     actOnResponse(content);
                 }
+<<<<<<< HEAD
 
                 console.log(pages[page].title);
                 storeWord(pages[page].title);
@@ -114,6 +116,8 @@ function tryToPopulateTip(title) {
                 chrome.storage.sync.get(pages[page].title, function(obj) {
                   console.log("Finished storing: " + obj);
                 });
+=======
+>>>>>>> f2bc8769b4cdcef7052a0b2f995313c972acb5a3
               }
             });
 
@@ -122,28 +126,53 @@ function tryToPopulateTip(title) {
 
 
 function storeWord(word) {
-  chrome.storage.sync.get(word, function(data) {
-    if (typeof data.word === 'undefined') { // undefined without quotes?
-      chrome.storage.sync.set({[word]: "stored" }, function() {
-          console.log("Stored: "+ word);
-      });
-
-      chrome.storage.sync.get("wordCounter", function(data2) {
-        if (typeof data2.word === 'undefined') { // undefined without quotes?
-          chrome.storage.sync.set({"wordCounter": 1}, function(data3) {
-            console.log("Setting wordCounter to 1: " + data3.wordCounter);
-          });
-        } else {
-          console.log("wordCounter previously: " + data2.wordCounter)
-          chrome.storage.sync.set({"wordCounter": data2.wordCounter + 1}, function(data3) {
-            console.log("wordCounter now: " + data3.wordCounter);
-          });
-        }
-      });
-    } else {
-      console.log("Already have stored: " + data.word);
-    }
+  var defaultValue = 0;
+  console.log("Store Word");
+  chrome.storage.sync.get({wordCount: defaultValue}, function(data) {
+    chrome.storage.sync.set({wordCount: data.wordCount + 1}, function() {
+      console.log("wordCount: " + data.wordCount);
+    });
   });
+
+  // chrome.storage.sync.get("wordCounter", function(data2) {
+  //       if (typeof data2.word === 'undefined') { // undefined without quotes?
+  //         // Instantiate counter
+  //         chrome.storage.sync.set({"wordCounter": 1}, function() {
+  //           //console.log("Setting wordCounter to 1: " + data3.wordCounter);
+  //         });
+  //       } else {
+  //         console.log(wordCounter)
+  //         console.log("wordCounter previously: " + data2.wordCounter)
+  //         chrome.storage.sync.set({"wordCounter": data2.wordCounter + 1}, function(data3) {
+  //           console.log("wordCounter now: " + data3.wordCounter);
+  //         });
+  //       }
+  //     });
+  // console.log("storeWord called: " + word)
+  // chrome.storage.sync.get([word], function(data) {
+  //   console.log("data.word: " + data.word)
+  //   if (typeof data.word === 'undefined') { // undefined without quotes?
+  //     chrome.storage.sync.set({[word]: "stored"}, function(result) {
+  //         console.log("Stored: " + word);
+  //         console.log(result)
+  //     });
+      // chrome.storage.sync.get("wordCounter", function(data2) {
+      //   if (typeof data2.word === 'undefined') { // undefined without quotes?
+      //     // Instantiate counter
+      //     chrome.storage.sync.set({"wordCounter": 1}, function(data3) {
+      //       console.log("Setting wordCounter to 1: " + data3.wordCounter);
+      //     });
+      //   } else {
+      //     console.log("wordCounter previously: " + data2.wordCounter)
+      //     chrome.storage.sync.set({"wordCounter": data2.wordCounter + 1}, function(data3) {
+      //       console.log("wordCounter now: " + data3.wordCounter);
+      //     });
+      //   }
+      // });
+    // } else {
+    //   console.log("Already have stored: " + data.word);
+    // }
+  // });
 
   // chrome.storage.sync.get([word], function(result) {
   //   if (result[word] === undefined) {
@@ -206,6 +235,9 @@ function showAndHideListeners(element) {
         if (!element.contains(event.target) && isVisible(element)) { // or use: event.target.closest(selector) === null
           element.style.display = 'none';
         }
+        if (event.ctrlKey) {
+            console.log("held!");  
+        }
 
     };
 
@@ -233,6 +265,16 @@ function showAndHideListeners(element) {
 
 const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length ); // source (2018-03-11): https://github.com/jquery/jquery/blob/master/src/css/hiddenVisibleSelectors.js
 showAndHideListeners(div);
+
+// Event listener for pressing 'w' and passing a message to open a new tab
+window.addEventListener("keypress", function(event) {
+    console.log(event.keyCode);
+    if (event.keyCode == 119 && isVisible(div)) {
+        alert('message passing time.');
+    }
+})
+
+
 
 // IDEAS
 // Might want disambugation support, link following through the popup, wikipedia interface

@@ -36,7 +36,7 @@ h5 {
   color: #FFFFFF;
 }
 
-img {
+.example-img {
   display: block;
   margin: 0 auto;
   width: 77%;
@@ -80,3 +80,24 @@ img {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
+
+a:link {
+  text-decoration: none;
+  color: lightgreen;
+}
+
+a:visited {
+  text-decoration: none;
+  color: lightyellow;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: purple;
+}
+
+a:active {
+  text-decoration: underline;
+  color: red;
+}
+

@@ -107,14 +107,9 @@ function tryToPopulateTip(title) {
                     htmlResponse = content;
                     actOnResponse(content);
                 }
-<<<<<<< HEAD:JoshBranch/myscripts.js
 
-
-=======
-                
                 console.log(pages[page].title);
                 storeWord(pages[page].title);
->>>>>>> 9544940bbe7cf6920ff05414d654912160ef846b:WikiLearn/myscripts.js
 
                 chrome.storage.sync.get(pages[page].title, function(obj) {
                   console.log("Finished storing: " + obj);

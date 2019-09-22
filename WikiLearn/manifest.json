@@ -2,9 +2,9 @@
 "update_url": "https://clients2.google.com/service/update2/crx",
 
   "manifest_version": 2,
-  "name": "Wiki-Kids",
+  "name": "WikiLearn",
   "version": "1.0",
-  "description": "A Wikipedia extension for adults and kids.",
+  "description": "A Wikipedia extension.",
   "permissions": ["activeTab", "tabs", "declarativeContent", "storage", "bookmarks", "contextMenus"],
   "options_page": "options.html",
   "background": {
@@ -12,7 +12,7 @@
     "persistent": false
   },
   "browser_action": {
-    "default_title": "Wiki-Kids",
+    "default_title": "WikiLearn",
     "default_popup": "popup.html",
     "default_icon": "images/wiki_logo.png"
   },

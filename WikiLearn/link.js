@@ -23,12 +23,11 @@ function hrefExtracter(htmlString) {
       el.innerHTML = linkString;
       var wikiTitle = el.childNodes[0].title;
       var text = el.childNodes[0].innerText;
-      var replacementForText = "<a href='#' onclick='TryToPopulateTip('" + wikiTitle + "');return false;'>" + text + "</a>";
+      var replacementForText = "<button class='link' id=" + encodeURIComponent(text.trim()) + ">" + text + "</button>";
       array.push(text);
       array.push(replacementForText);
     } 
     start = currentPos + 1;
   }
-  console.log(array);
   return array;
 }

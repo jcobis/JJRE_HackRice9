@@ -45,6 +45,8 @@ function selectionTip() {
 // Makes a request to wikipedia and populates the tip if the request returns succesfully
 function tryToPopulateTip(title) {
 
+    console.log(title);
+
     var plainAPIEndpoint = "https://en.wikipedia.org/w/api.php";
     var plainParams = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"
 
@@ -59,27 +61,81 @@ function tryToPopulateTip(title) {
     function actOnResponse (content) {
 
         processesToWaitOn--;
-        if (processesToWaitOn == 0) {
 
-            var toDisplay = plainResponse;
+
+        if (processesToWaitOn == 0) {
 
             // Replace words with in environment links
             // First get the first link in the plaintext
-            firstInText = 0;
+            wordIndex = 0;
             linkArray = hrefExtracter(htmlResponse);
-            while (firstInText < linkArray.length) {
-                
-                firstInText += 2
+
+            // Logs words to console
+            console.log(plainResponse);
+            temp = 0;
+            while (temp < linkArray.length) {
+                console.log("Word: " + linkArray[temp]);
+                temp += 2;
             }
 
 
-            div.innerHTML = toDisplay; // This will only run once
+            while (wordIndex < linkArray.length) {
+                
+                if (plainResponse.includes(linkArray[wordIndex])) {
+                    console.log("First: " + linkArray[wordIndex] );
+                    break;
+                }
+                wordIndex += 2;
+
+            }
+            startIndex = wordIndex;
+
+            charSpot = plainResponse.indexOf(linkArray[wordIndex]);
+            while (wordIndex < linkArray.length) {
+                searchPhrase = linkArray[wordIndex];
+                
+                // Break if theres no chance of finding the searchphrase anymore
+                if (charSpot + searchPhrase.length >= plainResponse.length){
+                    break;
+                }
+
+                // This code better work
+                if (plainResponse.substring(charSpot, charSpot + searchPhrase.length) == searchPhrase) {
+                    console.log("Found: " + searchPhrase);
+                    plainResponse = plainResponse.substring(0, charSpot) + linkArray[wordIndex + 1] + plainResponse.substring(charSpot + searchPhrase.length);
+                    //charSpot += linkArray[wordIndex + 1].length;
+                    wordIndex += 2;
+                }
+
+                charSpot += 1;
+                //console.log(charSpot);
+
+
+            }
+
+
+            div.innerHTML = plainResponse; // This will only run once
             div.style.display = 'block';
             div.scrollTop = 0;
+
+
+            // Add button links
+            var i;
+            for (i = startIndex; i < wordIndex; i+=2) {
+                text = linkArray[i];    
+                button = document.getElementById(encodeURIComponent(text.trim()));
+                button.addEventListener('click', switchPage, false);
+
+                function switchPage(evt) {
+                    tryToPopulateTip(evt.target.id); 
+                }
+            }
+
 
         }
 
     }
+
 
     // Plain request handling
     fetch(plainAPIEndpoint + "?" + plainParams + "&origin=*")
@@ -95,7 +151,7 @@ function tryToPopulateTip(title) {
                     actOnResponse(content);
 
                     // Showing new wikipedia page:
-                    console.log(pages[page].title);
+                    //console.log(pages[page].title);
                     storeWord(pages[page].title);
 
                     // chrome.storage.sync.get(pages[page].title, function(obj) {
@@ -128,10 +184,10 @@ function tryToPopulateTip(title) {
 
 function storeWord(word) {
   var defaultValue = 0;
-  console.log("Store Word");
+  //console.log("Store Word");
   chrome.storage.sync.get({wordCount: defaultValue}, function(data) {
     chrome.storage.sync.set({wordCount: data.wordCount + 1}, function() {
-      console.log("wordCount: " + data.wordCount);
+      //console.log("wordCount: " + data.wordCount);
     });
   });
 

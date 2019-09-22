@@ -57,7 +57,7 @@ function tryToPopulateTip(title) {
 
     // Waits until both responses come in to change page
     function actOnResponse (content) {
-        
+
         processesToWaitOn--;
         if (processesToWaitOn == 0) {
             div.innerHTML = htmlResponse; // This will only run once
@@ -66,7 +66,7 @@ function tryToPopulateTip(title) {
         }
 
     }
-    
+
     // Plain request handling
     fetch(plainAPIEndpoint + "?" + plainParams + "&origin=*")
         .then(function(response){return response.json();})
@@ -76,7 +76,7 @@ function tryToPopulateTip(title) {
                 for (var page in pages) {
                   var content = pages[page].extract;
                   if (content) {
-                    
+
                     plainResponse = content;
                     actOnResponse(content);
 
@@ -104,8 +104,8 @@ function tryToPopulateTip(title) {
                     htmlResponse = content;
                     actOnResponse(content);
                 }
-            
-            
+
+
 
                 // storeWord(pages[page].title)
                 // chrome.storage.sync.get("key", function (obj) {

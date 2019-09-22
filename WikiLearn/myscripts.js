@@ -89,7 +89,7 @@ function tryToPopulateTip(title) {
 
 
             while (wordIndex < linkArray.length) {
-                
+
                 if (plainResponse.includes(linkArray[wordIndex])) {
                     //console.log("First: " + linkArray[wordIndex] );
                     break;
@@ -102,7 +102,7 @@ function tryToPopulateTip(title) {
             charSpot = plainResponse.indexOf(linkArray[wordIndex]);
             while (wordIndex < linkArray.length) {
                 searchPhrase = linkArray[wordIndex];
-                
+
                 // Break if theres no chance of finding the searchphrase anymore
                 if (charSpot + searchPhrase.length >= plainResponse.length){
                     break;
@@ -130,12 +130,15 @@ function tryToPopulateTip(title) {
             // Add button links
             var i;
             for (i = startIndex; i < wordIndex; i+=2) {
-                text = linkArray[i];    
+                text = linkArray[i];
                 button = document.getElementById(encodeURIComponent(text.trim()));
                 button.addEventListener('click', switchPage, false);
 
                 function switchPage(evt) {
-                    tryToPopulateTip(decodeURIComponent(evt.target.id)); 
+                    console.log("wikiTitle: " + evt.target.wikiTitle);
+                    wikiData = evt.target.getAttribute('data-wiki');
+                    console.log(wikiData);
+                    tryToPopulateTip(decodeURIComponent(wikiData));
                 }
             }
 
@@ -343,14 +346,14 @@ window.addEventListener("keypress", function(event) {
 // chrome.runtime.onMessage.addListener((msg, sender, response) => {
 //   // First, validate the message's structure.
 //   if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
-//     // Collect the necessary data. 
+//     // Collect the necessary data.
 //     // (For your specific requirements `document.querySelectorAll(...)`
 //     //  should be equivalent to jquery's `$(...)`.)
 //     var domInfo = {
 //       total: ,
 //     };
 
-//     // Directly respond to the sender (popup), 
+//     // Directly respond to the sender (popup),
 //     // through the specified callback.
 //     response(domInfo);
 //   }

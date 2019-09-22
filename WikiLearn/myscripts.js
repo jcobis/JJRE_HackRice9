@@ -21,7 +21,7 @@ function setTipLocationToSelection() {
     var sel = document.getSelection();
     var r = sel.getRangeAt(0).getBoundingClientRect();
     div.style.top = (r.bottom + window.pageYOffset) + 'px'; //this will place div below the selection
-    div.style.left = (r.left + window.pageXOffset)+ 'px'; //this will align the right edges together
+    div.style.left = (r.left + window.pageXOffset) + 'px'; //this will align the right edges together
 }
 
 
@@ -61,6 +61,8 @@ function tryToPopulateTip(title) {
     function actOnResponse (content) {
 
         processesToWaitOn--;
+
+        console.log("One");
 
 
         if (processesToWaitOn == 0) {
@@ -110,7 +112,6 @@ function tryToPopulateTip(title) {
                 charSpot += 1;
                 //console.log(charSpot);
 
-
             }
 
 
@@ -127,7 +128,7 @@ function tryToPopulateTip(title) {
                 button.addEventListener('click', switchPage, false);
 
                 function switchPage(evt) {
-                    tryToPopulateTip(evt.target.id); 
+                    tryToPopulateTip(decodeURIComponent(evt.target.id)); 
                 }
             }
 
@@ -331,6 +332,22 @@ window.addEventListener("keypress", function(event) {
     }
 })
 
+
+// chrome.runtime.onMessage.addListener((msg, sender, response) => {
+//   // First, validate the message's structure.
+//   if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
+//     // Collect the necessary data. 
+//     // (For your specific requirements `document.querySelectorAll(...)`
+//     //  should be equivalent to jquery's `$(...)`.)
+//     var domInfo = {
+//       total: ,
+//     };
+
+//     // Directly respond to the sender (popup), 
+//     // through the specified callback.
+//     response(domInfo);
+//   }
+// });
 
 
 // IDEAS

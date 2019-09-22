@@ -1,14 +1,22 @@
-chrome.runtime.onInstalled.addListener(function() {
-    // console.log("install");
-    // chrome.storage.sync.set({"wordCounter": 1}, function() {
-    //   console.log("counter initialized");
-    // });
-    chrome.contextMenus.create({
-      "id": "sampleContextMenu",
-      "title": "Sample Context Menu",
-      "contexts": ["selection"]
-    });
-  });
+// chrome.runtime.onInstalled.addListener(function() {
+//     // console.log("install");
+//     // chrome.storage.sync.set({"wordCounter": 1}, function() {
+//     //   console.log("counter initialized");
+//     // });
+//     chrome.contextMenus.create({
+//       "id": "sampleContextMenu",
+//       "title": "Sample Context Menu",
+//       "contexts": ["selection"]
+//     });
+//   });
+
+// chrome.runtime.onMessage.addListener((msg, sender) => {
+//   // First, validate the message's structure.
+//   if ((msg.from === 'content') && (msg.subject === 'showPageAction')) {
+//     // Enable the page-action for the requesting tab.
+//     chrome.pageAction.show(sender.tab.id);
+//   }
+// });
 
 // // The onClicked callback function.
 // function onClickHandler(info, tab) {

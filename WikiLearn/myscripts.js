@@ -43,8 +43,7 @@ function selectionTip() {
 
 // Makes a request to wikipedia and populates the tip if the request returns succesfully
 function tryToPopulateTip(title) {
-
-    console.log("Initial title: " + title);
+    // console.log("Initial title: " + title);
 
     var plainAPIEndpoint = "https://en.wikipedia.org/w/api.php";
     var plainParams = "format=json&action=query&prop=extracts&titles=" + encodeURIComponent(title.trim()) + "&redirects=true"

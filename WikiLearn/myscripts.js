@@ -119,10 +119,6 @@ function tryToPopulateTip(title) {
                     htmlResponse = content;
                     actOnResponse(content);
                 }
-
-                chrome.storage.sync.get(pages[page].title, function(obj) {
-                  console.log("Finished storing: " + obj);
-                });
               }
             });
 

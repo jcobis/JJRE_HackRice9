@@ -63,21 +63,15 @@ function tryToPopulateTip(title) {
 
     // Waits until both responses come in to change page
     function actOnResponse (content) {
-
         processesToWaitOn--;
 
-
-
         if (processesToWaitOn == 0) {
-
-
             plainResponse = plainResponse.replace("<b>","").replace("</b>","").replace("<i>","").replace("</i>","");
 
             // Replace words with in environment links
             // First get the first link in the plaintext
             wordIndex = 0;
             linkArray = hrefExtracter(htmlResponse, plainResponse.substring(plainResponse.indexOf('<p>')).split(" ")[0].substring(3));
-            //console.log(plainResponse);
 
             // Logs words to console
             //console.log(plainResponse);
@@ -87,16 +81,14 @@ function tryToPopulateTip(title) {
                 temp += 2;
             }
 
-
             while (wordIndex < linkArray.length) {
-
                 if (plainResponse.includes(linkArray[wordIndex])) {
                     //console.log("First: " + linkArray[wordIndex] );
                     break;
                 }
                 wordIndex += 2;
-
             }
+
             startIndex = wordIndex;
 
             charSpot = plainResponse.indexOf(linkArray[wordIndex]);
@@ -118,14 +110,11 @@ function tryToPopulateTip(title) {
 
                 charSpot += 1;
                 //console.log(charSpot);
-
             }
-
 
             div.innerHTML = plainResponse; // This will only run once
             div.style.display = 'block';
             div.scrollTop = 0;
-
 
             // Add button links
             var i;
@@ -141,35 +130,26 @@ function tryToPopulateTip(title) {
                     tryToPopulateTip(decodeURIComponent(wikiData));
                 }
             }
-
-
         }
-
     }
-
 
     // Plain request handling
     fetch(plainAPIEndpoint + "?" + plainParams + "&origin=*")
         .then(function(response){return response.json();})
         .then(function(response) {
-              var pages = response.query.pages;
-              if (pages) {
-                for (var page in pages) {
-                  var content = pages[page].extract;
-                  if (content) {
+            var pages = response.query.pages;
+            if (pages) {
+              for (var page in pages) {
+                var content = pages[page].extract;
+                if (content) {
+                  // Showing new wikipedia page:
+                  plainResponse = content;
+                  actOnResponse(content);
 
-                    plainResponse = content;
-                    actOnResponse(content);
-
-                    // Showing new wikipedia page:
-                    //console.log(pages[page].title);
-                    storeWord(pages[page].title);
-
-                    // chrome.storage.sync.get(pages[page].title, function(obj) {
-                    //   console.log("Finished storing: " + obj);
-                    // });
-                  }
-                  break;
+                  //console.log(pages[page].title);
+                  storeWord(pages[page].title);
+                }
+                break;
               }
             }
         });
@@ -262,33 +242,6 @@ function storeWord(word) {
 }
 
 
-function getWord(key) {
-  chrome.storage.sync.get(key, function(data) { console.log(Object.values(data)[0].val); })
-}
-
-
-// const setStorageData = data =>
-//   new Promise((resolve, reject) =>
-//     chrome.storage.sync.set(data, () =>
-//       chrome.runtime.lastError
-//         ? reject(Error(chrome.runtime.lastError.message))
-//         : resolve()
-//     )
-//   )
-
-// await setStorageData({ data: [someData] })
-
-// const getStorageData = key =>
-//   new Promise((resolve, reject) =>
-//     chrome.storage.sync.get(key, result =>
-//       chrome.runtime.lastError
-//         ? reject(Error(chrome.runtime.lastError.message))
-//         : resolve(result)
-//     )
-//   )
-
-// const { data } = await getStorageData('data')
-
 // Show tip when text selected
 // document.onmouseup = selectionTip;
 
@@ -341,26 +294,3 @@ window.addEventListener("keypress", function(event) {
         alert('message passing time.');
     }
 })
-
-
-// chrome.runtime.onMessage.addListener((msg, sender, response) => {
-//   // First, validate the message's structure.
-//   if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
-//     // Collect the necessary data.
-//     // (For your specific requirements `document.querySelectorAll(...)`
-//     //  should be equivalent to jquery's `$(...)`.)
-//     var domInfo = {
-//       total: ,
-//     };
-
-//     // Directly respond to the sender (popup),
-//     // through the specified callback.
-//     response(domInfo);
-//   }
-// });
-
-
-// IDEAS
-// Might want disambugation support, link following through the popup, wikipedia interface
-// WIKIPEDIA INTEGRATION with article reading, maybe sharing screen or something
-// Preload and make calls for common words on the page (but make sure to impose 200 limits? Or for different API)
